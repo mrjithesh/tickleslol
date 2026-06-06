@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1a0a00" />
+  <meta name="description" content="Punchline – Where amateur comedians get real feedback and the world gets real laughs. Join the community built for better jokes and better mental health." />
+  <link rel="manifest" href="manifest.json" />
+  <title>Punchline – Comedy That Connects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<!-- Hotjar Tracking Code for Tickles LOL -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:6725854,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+  <style>
+    :root {
+      --ink: #1a0a00;
+      --cream: #fdf6e3;
+      --warm: #f5e6c8;
+      --punch: #e8460a;
+      --punch-light: #ff6b35;
+      --gold: #f4b942;
+      --sage: #7a9e7e;
+      --sage-dark: #4a6b4e;
+      --mist: #e8f0e9;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 2.5rem;
+      backdrop-filter: blur(16px);
+      background: rgba(253, 246, 227, 0.88);
+      border-bottom: 1px solid rgba(26,10,0,0.08);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.04em;
+      color: var(--punch);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--ink); }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      text-decoration: none; color: var(--ink);
+      font-size: 0.9rem; font-weight: 400; letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--punch); }
+    .btn-nav {
+      background: var(--ink); color: var(--cream);
+      padding: 0.55rem 1.4rem; border-radius: 100px;
+      font-size: 0.85rem; font-weight: 500;
+      text-decoration: none; transition: background 0.2s, transform 0.15s;
+    }
+    .btn-nav:hover { background: var(--punch); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 6rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+      gap: 2rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(232,70,10,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(122,158,126,0.1) 0%, transparent 60%),
+        var(--cream);
+    }
+    .hero-noise {
+      position: absolute; inset: 0; z-index: 0; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--punch); color: var(--cream);
+      padding: 0.35rem 0.9rem; border-radius: 100px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.1s both;
+    }
+    .hero-eyebrow .dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 8vw, 8rem);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      animation: fadeUp 0.6s 0.2s both;
+    }
+    h1 .accent { color: var(--punch); display: block; }
+    h1 .italic {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.05em;
+      color: var(--punch);
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 1.15rem; line-height: 1.7; max-width: 520px;
+      font-family: 'Fraunces', serif; font-weight: 300;
+      animation: fadeUp 0.6s 0.35s both;
+    }
+    .hero-sub strong { font-weight: 700; }
+
+    .hero-ctas {
+      margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.45s both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--punch); color: var(--cream);
+      padding: 1rem 2rem; border-radius: 100px;
+      font-weight: 500; font-size: 1rem; text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(232,70,10,0.3);
+    }
+    .btn-primary:hover { background: var(--punch-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,70,10,0.35); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: var(--ink);
+      padding: 1rem 2rem; border-radius: 100px;
+      border: 1.5px solid var(--ink); font-weight: 400; font-size: 1rem;
+      text-decoration: none; transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { background: var(--ink); color: var(--cream); transform: translateY(-2px); }
+
+    .hero-visual {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 1.2rem;
+      animation: fadeIn 0.8s 0.5s both;
+    }
+
+    /* Joke cards in hero */
+    .joke-card {
+      background: white;
+      border-radius: 1.2rem;
+      padding: 1.4rem 1.8rem;
+      box-shadow: 0 4px 24px rgba(26,10,0,0.08);
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .joke-card:hover { transform: translateY(-3px); }
+    .joke-card.featured {
+      background: var(--ink); color: var(--cream);
+      transform: rotate(-1deg);
+    }
+    .joke-card.featured:hover { transform: rotate(-1deg) translateY(-3px); }
+    .joke-card .joke-tag {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+      font-weight: 500; color: var(--punch); margin-bottom: 0.5rem;
+    }
+    .joke-card.featured .joke-tag { color: var(--gold); }
+    .joke-card .joke-text {
+      font-family: 'Fraunces', serif; font-style: italic; font-size: 1.05rem; line-height: 1.55;
+    }
+    .joke-card .joke-author {
+      margin-top: 0.8rem; font-size: 0.8rem; opacity: 0.6; font-weight: 400;
+    }
+    .joke-card .joke-ratings {
+      display: flex; gap: 0.4rem; margin-top: 0.8rem; align-items: center;
+    }
+    .star { color: var(--gold); font-size: 1rem; }
+    .star.empty { opacity: 0.3; }
+    .rating-count { font-size: 0.8rem; font-weight: 500; margin-left: 0.3rem; opacity: 0.7; }
+
+    .floating-tag {
+      position: absolute;
+      background: var(--gold);
+      color: var(--ink);
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+      font-size: 0.78rem; font-weight: 500;
+      box-shadow: 0 4px 12px rgba(244,185,66,0.4);
+    }
+
+    /* Stats strip */
+    .stats-strip {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 2rem 4rem;
+      display: flex; gap: 4rem; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.2rem; color: var(--gold);
+      display: block; line-height: 1;
+    }
+    .stat-label { font-size: 0.85rem; opacity: 0.65; margin-top: 0.3rem; letter-spacing: 0.04em; }
+
+    /* ── HOW IT WORKS ── */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--punch);
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      line-height: 1; letter-spacing: 0.02em;
+    }
+    h2 em {
+      font-family: 'Fraunces', serif;
+      font-style: italic; color: var(--punch); font-size: 1.05em;
+    }
+
+    .two-paths {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      margin-top: 4rem;
+    }
+    .path-card {
+      border-radius: 1.5rem;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .path-card:hover { transform: translateY(-4px); }
+    .path-card.comedian {
+      background: var(--ink); color: var(--cream);
+    }
+    .path-card.laugher {
+      background: var(--mist); color: var(--ink);
+      border: 1.5px solid rgba(122,158,126,0.3);
+    }
+    .path-card .path-icon {
+      font-size: 3.5rem; margin-bottom: 1.5rem; display: block;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+    .path-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem; letter-spacing: 0.03em; margin-bottom: 0.8rem;
+    }
+    .path-card.comedian h3 { color: var(--gold); }
+    .path-card.laugher h3 { color: var(--sage-dark); }
+    .path-card p {
+      font-family: 'Fraunces', serif; font-size: 1.05rem; line-height: 1.7;
+      margin-bottom: 1.8rem; opacity: 0.85;
+    }
+    .path-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+    .path-features li {
+      display: flex; align-items: flex-start; gap: 0.7rem;
+      font-size: 0.9rem; font-weight: 400;
+    }
+    .path-features li::before {
+      content: '→'; font-weight: 700; flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .path-card.comedian .path-features li::before { color: var(--gold); }
+    .path-card.laugher .path-features li::before { color: var(--sage-dark); }
+
+    .btn-path-comedian {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--punch); color: var(--cream);
+      padding: 0.85rem 1.8rem; border-radius: 100px;
+      font-weight: 500; font-size: 0.95rem; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-path-comedian:hover { background: var(--punch-light); transform: translateY(-2px); }
+    .btn-path-laugher {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--sage-dark); color: var(--cream);
+      padding: 0.85rem 1.8rem; border-radius: 100px;
+      font-weight: 500; font-size: 0.95rem; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-path-laugher:hover { background: var(--sage); transform: translateY(-2px); }
+
+    /* ── MENTAL HEALTH ── */
+    .mental-health-section {
+      background: var(--mist);
+      padding: 6rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .mental-health-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+    }
+    .mh-visual {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .mh-stat-card {
+      background: white; border-radius: 1rem; padding: 1.5rem 1.8rem;
+      display: flex; align-items: center; gap: 1.2rem;
+      box-shadow: 0 4px 20px rgba(26,10,0,0.06);
+    }
+    .mh-stat-icon { font-size: 2rem; flex-shrink: 0; }
+    .mh-stat-text { font-family: 'Fraunces', serif; font-size: 1rem; line-height: 1.5; }
+    .mh-stat-text strong { font-weight: 700; display: block; font-size: 1.15rem; }
+    blockquote {
+      background: var(--sage-dark); color: var(--cream);
+      border-radius: 1rem; padding: 2rem;
+      font-family: 'Fraunces', serif; font-style: italic;
+      font-size: 1.15rem; line-height: 1.65;
+      position: relative;
+    }
+    blockquote::before {
+      content: '"'; font-family: 'Bebas Neue', sans-serif;
+      font-size: 6rem; color: var(--gold); opacity: 0.4;
+      position: absolute; top: -1rem; left: 1rem; line-height: 1;
+    }
+    blockquote cite { display: block; margin-top: 1rem; font-size: 0.85rem; font-style: normal; opacity: 0.7; }
+
+    /* ── HOW IT WORKS STEPS ── */
+    .steps-section { background: white; }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem;
+      margin-top: 4rem;
+    }
+    .step {
+      position: relative;
+      padding-top: 1rem;
+    }
+    .step-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem; color: var(--warm); line-height: 1;
+      margin-bottom: -1rem;
+      user-select: none;
+    }
+    .step-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .step h4 {
+      font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.2rem;
+      margin-bottom: 0.6rem; color: var(--ink);
+    }
+    .step p { font-size: 0.9rem; line-height: 1.65; opacity: 0.75; }
+
+    /* ── SAMPLE FEED ── */
+    .feed-section { background: var(--cream); }
+    .feed-preview {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+      margin-top: 4rem;
+    }
+    .feed-joke-card {
+      background: white; border-radius: 1.2rem; padding: 1.8rem;
+      box-shadow: 0 4px 20px rgba(26,10,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .feed-joke-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(26,10,0,0.12); }
+    .feed-joke-card:nth-child(2) { transform: translateY(1.5rem); }
+    .feed-joke-card:nth-child(2):hover { transform: translateY(calc(1.5rem - 4px)); }
+    .feed-card-header { display: flex; justify-content: space-between; align-items: center; }
+    .comedian-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .comedian-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .comedian-name { font-size: 0.82rem; font-weight: 500; }
+    .comedian-level { font-size: 0.7rem; opacity: 0.5; font-weight: 300; }
+    .joke-category {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--sage-dark);
+      background: var(--mist); padding: 0.25rem 0.6rem; border-radius: 100px;
+    }
+    .joke-body {
+      font-family: 'Fraunces', serif; font-style: italic;
+      font-size: 1rem; line-height: 1.65; flex: 1;
+    }
+    .joke-punchline { font-weight: 700; font-style: normal; color: var(--punch); }
+    .feed-card-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--warm); padding-top: 1rem;
+    }
+    .rating-stars { display: flex; gap: 0.2rem; }
+    .rating-stars .star { font-size: 0.9rem; }
+    .reaction-row { display: flex; gap: 0.5rem; }
+    .reaction-btn {
+      background: var(--warm); border: none; cursor: pointer;
+      padding: 0.35rem 0.7rem; border-radius: 100px;
+      font-size: 0.85rem; transition: background 0.2s, transform 0.15s;
+    }
+    .reaction-btn:hover { background: var(--gold); transform: scale(1.1); }
+    .reaction-btn.active { background: var(--punch); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section {
+      background: var(--ink); color: var(--cream); padding: 6rem 4rem;
+    }
+    .testimonials-section .section-label { color: var(--gold); }
+    .testimonials-section h2 { color: var(--cream); }
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+      margin-top: 4rem;
+    }
+    .testi-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1.2rem; padding: 2rem;
+      transition: background 0.3s;
+    }
+    .testi-card:hover { background: rgba(255,255,255,0.08); }
+    .testi-quote {
+      font-family: 'Fraunces', serif; font-style: italic;
+      font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem; opacity: 0.9;
+    }
+    .testi-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+      background: rgba(255,255,255,0.1);
+    }
+    .testi-name { font-weight: 500; font-size: 0.9rem; }
+    .testi-role { font-size: 0.78rem; opacity: 0.5; margin-top: 0.1rem; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--punch);
+      color: var(--cream);
+      text-align: center;
+      padding: 6rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .cta-section h2 { color: var(--cream); font-size: clamp(3rem, 6vw, 6rem); }
+    .cta-section h2 em { color: var(--gold); }
+    .cta-section p {
+      font-family: 'Fraunces', serif; font-size: 1.2rem;
+      margin: 1.5rem auto; max-width: 540px; opacity: 0.9;
+    }
+    .cta-buttons { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+    .btn-cta-light {
+      background: var(--cream); color: var(--punch);
+      padding: 1.1rem 2.5rem; border-radius: 100px;
+      font-weight: 600; font-size: 1rem; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-cta-light:hover { background: var(--gold); color: var(--ink); transform: translateY(-2px); }
+    .btn-cta-outline {
+      background: transparent; color: var(--cream);
+      border: 2px solid rgba(255,255,255,0.6);
+      padding: 1.1rem 2.5rem; border-radius: 100px;
+      font-weight: 500; font-size: 1rem; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-cta-outline:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); color: var(--cream);
+      padding: 3rem 4rem 2rem;
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap; gap: 2rem;
+    }
+    .footer-brand .nav-logo { font-size: 2.4rem; }
+    .footer-brand p { font-size: 0.88rem; opacity: 0.5; margin-top: 0.5rem; max-width: 240px; line-height: 1.6; }
+    .footer-links h5 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 1rem; }
+    .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { color: var(--cream); text-decoration: none; font-size: 0.88rem; opacity: 0.7; transition: opacity 0.2s; }
+    .footer-links a:hover { opacity: 1; }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 1.5rem; font-size: 0.8rem; opacity: 0.4; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom .pwa-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,255,255,0.08); padding: 0.35rem 0.8rem; border-radius: 100px;
+      font-size: 0.75rem; opacity: 1;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    .reveal.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 5rem 1.5rem 3rem; }
+      .hero-visual { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .two-paths { grid-template-columns: 1fr; }
+      .mental-health-inner { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .feed-preview { grid-template-columns: 1fr; }
+      .feed-joke-card:nth-child(2) { transform: none; }
+      .feed-joke-card:nth-child(2):hover { transform: translateY(-4px); }
+      .testi-grid { grid-template-columns: 1fr; }
+      .stats-strip { gap: 2rem; flex-wrap: wrap; padding: 2rem; }
+      .cta-section { padding: 4rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; }
+      .footer-inner { flex-direction: column; }
+      .footer-bottom { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Punch<span>line</span></a>
+    <div class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#mental-health">Why it matters</a>
+      <a href="#feed">See jokes</a>
+      <a href="#signup" class="btn-nav">Join free →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" style="padding-top:6rem">
+    <div class="hero-bg"></div>
+    <div class="hero-noise"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow"><span class="dot"></span> Comedy meets community</div>
+      <h1>
+        Better jokes.<br>
+        <span class="accent">Real <span class="italic">laughs.</span></span><br>
+        Better days.
+      </h1>
+      <p class="hero-sub">
+        A community where <strong>aspiring comedians</strong> get honest feedback on their jokes — and everyone else gets a <strong>daily dose of laughter</strong> for their mental health.
+      </p>
+      <div class="hero-ctas">
+        <a href="#comedian-signup" class="btn-primary">🎤 I've got jokes →</a>
+        <a href="#laugher-signup" class="btn-secondary">😂 I need laughs →</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="joke-card featured" style="margin-left:2rem">
+        <div class="joke-tag">⭐ Top Rated This Week</div>
+        <div class="joke-text">My GPS told me to take a right at the next light. I said "finally, someone who gets me." I always feel so validated by technology.</div>
+        <div class="joke-author">— @TimTheTestPilot · Comedy Rookie</div>
+        <div class="joke-ratings">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          <span class="rating-count">4.8 · 142 ratings</span>
+        </div>
+      </div>
+
+      <div class="joke-card" style="margin-left:-1rem; margin-top:-0.5rem">
+        <div class="joke-tag">💬 New Feedback Received</div>
+        <div class="joke-text">"The timing on the punchline is chef's kiss. Maybe cut the second sentence though?" — Sarah_LOL</div>
+        <div class="joke-ratings">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+          <span class="rating-count">4.2 · 89 ratings</span>
+        </div>
+      </div>
+
+      <div style="position:relative; margin-left:3rem">
+        <div class="joke-card">
+          <div class="joke-tag">😂 Laugh Score</div>
+          <div class="joke-text">I asked my dog what two minus two is. He said nothing.</div>
+          <div class="joke-author">— @DadJokeDave</div>
+          <div class="joke-ratings">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+            <span class="rating-count">4.5 · 203 ratings</span>
+          </div>
+        </div>
+        <span class="floating-tag" style="bottom:-0.8rem;right:-1rem">🏆 Trending</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <span class="stat-number">12K+</span>
+      <div class="stat-label">Jokes rated this month</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">3.2K</span>
+      <div class="stat-label">Amateur comedians</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">94%</span>
+      <div class="stat-label">Say it brightened their day</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">48</span>
+      <div class="stat-label">Countries represented</div>
+    </div>
+  </div>
+
+  <!-- TWO PATHS -->
+  <section id="how-it-works" style="background:var(--cream)">
+    <div class="section-label">Two ways to play</div>
+    <h2>Choose your <em>path</em></h2>
+    <div class="two-paths">
+      <div class="path-card comedian reveal">
+        <span class="path-icon">🎤</span>
+        <h3>I'm a Comedian</h3>
+        <p>You've got jokes. Now find out if they actually land — before the open mic night.</p>
+        <ul class="path-features">
+          <li>Post your jokes and get star ratings from a real audience</li>
+          <li>Receive written feedback on timing, structure, and punchline strength</li>
+          <li>Track which joke styles work best for you</li>
+          <li>Build your portfolio and reputation over time</li>
+          <li>Compete in weekly comedy challenges</li>
+        </ul>
+        <a href="#comedian-signup" class="btn-path-comedian">Start getting feedback →</a>
+      </div>
+
+      <div class="path-card laugher reveal" style="transition-delay:0.15s">
+        <span class="path-icon">😂</span>
+        <h3>I Need a Laugh</h3>
+        <p>Science says laughter reduces stress, anxiety, and pain. Punchline is your daily dose.</p>
+        <ul class="path-features">
+          <li>A curated daily feed of fresh amateur jokes</li>
+          <li>Rate jokes and leave quick feedback — it takes 30 seconds</li>
+          <li>Save your favourites for the days you need them most</li>
+          <li>Join themed collections: wholesome, absurdist, dad jokes, and more</li>
+          <li>Connect with others who just want to smile more</li>
+        </ul>
+        <a href="#laugher-signup" class="btn-path-laugher">Get my daily laugh →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENTAL HEALTH -->
+  <section id="mental-health" class="mental-health-section">
+    <div class="mental-health-inner">
+      <div class="reveal">
+        <div class="section-label">Why laughter matters</div>
+        <h2>Funny isn't <em>frivolous</em></h2>
+        <p style="font-family:'Fraunces',serif;font-size:1.1rem;line-height:1.8;margin:1.5rem 0;opacity:0.8">
+          Laughter is one of the most accessible tools for mental wellness we have — and one of the most underused. Punchline makes it a daily habit without it feeling like a chore.
+        </p>
+        <p style="font-family:'Fraunces',serif;font-size:1rem;line-height:1.7;opacity:0.7">
+          For comedians, the act of crafting and sharing jokes is itself therapeutic — a creative outlet, a source of community connection, and a way to process the world through humour.
+        </p>
+      </div>
+      <div class="mh-visual reveal" style="transition-delay:0.2s">
+        <div class="mh-stat-card">
+          <div class="mh-stat-icon">🧠</div>
+          <div class="mh-stat-text">
+            <strong>Laughter reduces cortisol</strong>
+            The body's stress hormone drops measurably after sustained laughter
+          </div>
+        </div>
+        <div class="mh-stat-card">
+          <div class="mh-stat-icon">💪</div>
+          <div class="mh-stat-text">
+            <strong>Boosts immune function</strong>
+            Regular laughter is linked to increased immune cell production
+          </div>
+        </div>
+        <div class="mh-stat-card">
+          <div class="mh-stat-icon">🤝</div>
+          <div class="mh-stat-text">
+            <strong>Builds social bonds</strong>
+            Shared humour is one of the fastest ways to feel human connection
+          </div>
+        </div>
+        <blockquote>
+          "I posted my first joke on a Tuesday night when I was feeling really low. By Thursday I had 60 ratings and someone wrote 'this made my commute'. That small thing mattered so much."
+          <cite>— Marcus D., Punchline member since 2024</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS STEPS -->
+  <section class="steps-section" id="steps">
+    <div class="section-label">Getting started</div>
+    <h2>Up in <em>three steps</em></h2>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-number">01</div>
+        <div class="step-icon">✍️</div>
+        <h4>Sign up & choose your path</h4>
+        <p>Join as a comedian, a laughter-seeker, or both. Your profile sets up your feed and experience from day one.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.1s">
+        <div class="step-number">02</div>
+        <div class="step-icon">🎭</div>
+        <h4>Post or browse</h4>
+        <p>Comedians drop their material. Laughers get a daily personalised feed. Everyone rates, everyone benefits.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.2s">
+        <div class="step-number">03</div>
+        <div class="step-icon">📈</div>
+        <h4>Grow together</h4>
+        <p>Comedians level up their craft with real data. Laughers build a habit that actually sticks — because it's genuinely fun.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEED PREVIEW -->
+  <section id="feed" class="feed-section">
+    <div class="section-label">Live from the community</div>
+    <h2>Fresh jokes, <em>daily</em></h2>
+    <div class="feed-preview">
+      <div class="feed-joke-card reveal">
+        <div class="feed-card-header">
+          <div class="comedian-badge">
+            <div class="comedian-avatar" style="background:#fde8d8">🦉</div>
+            <div>
+              <div class="comedian-name">@NightOwlNick</div>
+              <div class="comedian-level">Seasoned Heckler</div>
+            </div>
+          </div>
+          <span class="joke-category">Observational</span>
+        </div>
+        <div class="joke-body">
+          I finally understand why adults always said "I'll sleep when I'm dead." They were just really bad at predicting when they'd have free time.
+          <span class="joke-punchline"> Turns out adulthood is just being permanently tired with better excuses.</span>
+        </div>
+        <div class="feed-card-footer">
+          <div class="rating-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+            <span class="rating-count" style="font-size:0.78rem;margin-left:0.4rem;opacity:0.6">4.3 · 87</span>
+          </div>
+          <div class="reaction-row">
+            <button class="reaction-btn active">😂</button>
+            <button class="reaction-btn">👏</button>
+            <button class="reaction-btn">💬</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="feed-joke-card reveal" style="transition-delay:0.1s">
+        <div class="feed-card-header">
+          <div class="comedian-badge">
+            <div class="comedian-avatar" style="background:#e8f4e8">🌱</div>
+            <div>
+              <div class="comedian-name">@GrowingGabs</div>
+              <div class="comedian-level">Comedy Seedling</div>
+            </div>
+          </div>
+          <span class="joke-category">Dad Joke</span>
+        </div>
+        <div class="joke-body">
+          I told my wife she was drawing her eyebrows too high. She looked surprised.
+          <span class="joke-punchline"> I'm starting to think she didn't believe me.</span>
+        </div>
+        <div class="feed-card-footer">
+          <div class="rating-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+            <span class="rating-count" style="font-size:0.78rem;margin-left:0.4rem;opacity:0.6">4.8 · 212</span>
+          </div>
+          <div class="reaction-row">
+            <button class="reaction-btn">😂</button>
+            <button class="reaction-btn active">👏</button>
+            <button class="reaction-btn">💬</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="feed-joke-card reveal" style="transition-delay:0.2s">
+        <div class="feed-card-header">
+          <div class="comedian-badge">
+            <div class="comedian-avatar" style="background:#fff3cd">🔥</div>
+            <div>
+              <div class="comedian-name">@SunflowerStan</div>
+              <div class="comedian-level">Rising Star</div>
+            </div>
+          </div>
+          <span class="joke-category">Absurdist</span>
+        </div>
+        <div class="joke-body">
+          A skeleton walks into a bar and orders a beer and a mop.
+          <span class="joke-punchline"> The bartender nods slowly, the way you do when you've seen everything.</span>
+        </div>
+        <div class="feed-card-footer">
+          <div class="rating-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+            <span class="rating-count" style="font-size:0.78rem;margin-left:0.4rem;opacity:0.6">4.1 · 54</span>
+          </div>
+          <div class="reaction-row">
+            <button class="reaction-btn">😂</button>
+            <button class="reaction-btn">👏</button>
+            <button class="reaction-btn active">💬</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="section-label">Real humans, real laughs</div>
+    <h2>What the <em>community</em> says</h2>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <p class="testi-quote">"I've been doing open mics for two years but never knew which jokes actually worked until Punchline. The feedback is genuinely useful — not just emojis."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">🎙️</div>
+          <div>
+            <div class="testi-name">Priya M.</div>
+            <div class="testi-role">Amateur standup · Melbourne</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.1s">
+        <p class="testi-quote">"I signed up for laughs, stayed for the community. I spend 10 minutes on here every morning and I genuinely start the day in a better mood."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">☀️</div>
+          <div>
+            <div class="testi-name">James T.</div>
+            <div class="testi-role">Laughter seeker · Sydney</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.2s">
+        <p class="testi-quote">"My therapist actually suggested finding more moments of joy. I told him about Punchline and he asked for the link. That felt like a win."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">🌿</div>
+          <div>
+            <div class="testi-name">Aisha K.</div>
+            <div class="testi-role">Daily reader · Auckland</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="signup">
+    <div class="section-label" style="color:rgba(255,255,255,0.5)">Ready?</div>
+    <h2>Drop a joke.<br><em>Make someone's day.</em></h2>
+    <p>Join thousands of comedians and laugh-seekers building a lighter, funnier, genuinely better-feeling world — one punchline at a time.</p>
+    <div class="cta-buttons">
+      <a href="#comedian-signup" class="btn-cta-light">🎤 I'm a comedian</a>
+      <a href="#laugher-signup" class="btn-cta-outline">😂 I need laughs</a>
+    </div>
+    <p style="font-size:0.85rem;margin-top:1.5rem;opacity:0.6">Free forever. No algorithm guilt. Just laughs.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">Punch<span style="color:var(--gold)">line</span></a>
+        <p>Where better jokes meet better days. A community for amateur comedians and everyone who needs a laugh.</p>
+      </div>
+      <div class="footer-links">
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="#">For Comedians</a></li>
+          <li><a href="#">For Laugh Seekers</a></li>
+          <li><a href="#">Weekly Challenges</a></li>
+          <li><a href="#">Leaderboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>Community</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Mental Health Resources</a></li>
+          <li><a href="#">Community Guidelines</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Punchline. Built for laughs, backed by science.</span>
+      <div class="pwa-footer">
+        <span class="pwa-badge">📱 Install as app — works offline</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Reaction button toggle
+    document.querySelectorAll('.reaction-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const siblings = this.parentElement.querySelectorAll('.reaction-btn');
+        siblings.forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+  </script>
+</body>
+</html>
