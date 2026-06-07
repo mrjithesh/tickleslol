@@ -516,6 +516,187 @@
       opacity: 1; transform: translateY(0);
     }
 
+    /* ── SIGNUP FORMS SECTION ── */
+    .forms-section {
+      background: var(--cream);
+      padding: 6rem 4rem;
+    }
+    .forms-section .section-label { color: var(--punch); }
+
+    .forms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      margin-top: 4rem;
+    }
+
+    /* Form cards */
+    .form-card {
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .form-card.comedian-form {
+      background: var(--ink);
+      color: var(--cream);
+    }
+    .form-card.laugher-form {
+      background: var(--mist);
+      color: var(--ink);
+      border: 1.5px solid rgba(122,158,126,0.25);
+    }
+    .form-card-header {
+      margin-bottom: 2rem;
+    }
+    .form-card-icon { font-size: 2.2rem; margin-bottom: 0.8rem; display: block; }
+    .form-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 0.03em; margin-bottom: 0.4rem;
+    }
+    .form-card.comedian-form h3 { color: var(--gold); }
+    .form-card.laugher-form h3 { color: var(--sage-dark); }
+    .form-card p.form-desc {
+      font-family: 'Fraunces', serif; font-style: italic;
+      font-size: 0.95rem; line-height: 1.6; opacity: 0.75;
+    }
+
+    /* Form fields */
+    .field-group { display: flex; flex-direction: column; gap: 1rem; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .field {
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .field label {
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .comedian-form .field label { color: rgba(255,255,255,0.5); }
+    .laugher-form .field label { color: var(--sage-dark); }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid;
+      border-radius: 0.6rem;
+      padding: 0.75rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+    }
+    .comedian-form .field input,
+    .comedian-form .field select,
+    .comedian-form .field textarea {
+      border-color: rgba(255,255,255,0.15);
+      color: var(--cream);
+    }
+    .comedian-form .field input::placeholder,
+    .comedian-form .field textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .comedian-form .field input:focus,
+    .comedian-form .field select:focus,
+    .comedian-form .field textarea:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.04);
+    }
+    .comedian-form .field select option { background: var(--ink); color: var(--cream); }
+
+    .laugher-form .field input,
+    .laugher-form .field select,
+    .laugher-form .field textarea {
+      border-color: rgba(74,107,78,0.25);
+      color: var(--ink);
+      background: white;
+    }
+    .laugher-form .field input::placeholder,
+    .laugher-form .field textarea::placeholder { color: rgba(26,10,0,0.3); }
+    .laugher-form .field input:focus,
+    .laugher-form .field select:focus,
+    .laugher-form .field textarea:focus {
+      border-color: var(--sage-dark);
+      background: white;
+    }
+
+    .field textarea { resize: vertical; min-height: 90px; }
+
+    /* Checkbox group */
+    .checkbox-group {
+      display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.2rem;
+    }
+    .checkbox-label {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-size: 0.88rem; cursor: pointer;
+    }
+    .checkbox-label input[type="checkbox"] {
+      width: 18px; height: 18px; flex-shrink: 0;
+      border-radius: 4px; padding: 0;
+      accent-color: var(--punch);
+    }
+    .laugher-form .checkbox-label input[type="checkbox"] {
+      accent-color: var(--sage-dark);
+    }
+
+    /* Privacy note */
+    .privacy-note {
+      font-size: 0.75rem; opacity: 0.45; margin-top: 0.5rem; line-height: 1.5;
+    }
+
+    /* Submit buttons */
+    .btn-submit-comedian {
+      width: 100%; margin-top: 1.5rem;
+      background: var(--punch); color: var(--cream);
+      border: none; border-radius: 100px;
+      padding: 1rem 2rem; font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 500; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, opacity 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .btn-submit-comedian:hover:not(:disabled) { background: var(--punch-light); transform: translateY(-2px); }
+    .btn-submit-comedian:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn-submit-laugher {
+      width: 100%; margin-top: 1.5rem;
+      background: var(--sage-dark); color: var(--cream);
+      border: none; border-radius: 100px;
+      padding: 1rem 2rem; font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 500; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, opacity 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .btn-submit-laugher:hover:not(:disabled) { background: var(--sage); transform: translateY(-2px); }
+    .btn-submit-laugher:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .form-success.visible { display: flex; }
+    .form-success .success-icon { font-size: 3.5rem; }
+    .form-success h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem; letter-spacing: 0.03em;
+    }
+    .comedian-form .form-success h4 { color: var(--gold); }
+    .laugher-form .form-success h4 { color: var(--sage-dark); }
+    .form-success p { font-family: 'Fraunces', serif; font-style: italic; font-size: 1rem; opacity: 0.75; }
+
+    /* Error message */
+    .form-error {
+      display: none; color: #ff6b6b;
+      font-size: 0.82rem; margin-top: 0.5rem; text-align: center;
+    }
+    .form-error.visible { display: block; }
+
     /* ── MOBILE ── */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
@@ -530,6 +711,8 @@
       .feed-joke-card:nth-child(2) { transform: none; }
       .feed-joke-card:nth-child(2):hover { transform: translateY(-4px); }
       .testi-grid { grid-template-columns: 1fr; }
+      .forms-grid { grid-template-columns: 1fr; }
+      .field-row { grid-template-columns: 1fr; }
       .stats-strip { gap: 2rem; flex-wrap: wrap; padding: 2rem; }
       .cta-section { padding: 4rem 1.5rem; }
       footer { padding: 2rem 1.5rem; }
@@ -872,6 +1055,195 @@
     <p style="font-size:0.85rem;margin-top:1.5rem;opacity:0.6">Free forever. No algorithm guilt. Just laughs.</p>
   </section>
 
+  <!-- ═══════════════════════════════════════
+       NETLIFY FORM DETECTION STUBS
+       Required for AJAX-submitted forms — Netlify's build bot
+       scans static HTML at deploy time, so both forms must appear
+       in the HTML even though submission is handled via fetch().
+       ═══════════════════════════════════════ -->
+  <div style="display:none" aria-hidden="true">
+    <form name="comedian-signup" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="comedian-signup" />
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="email" />
+      <input name="username" />
+      <select name="experience">
+        <option value="just-starting">Just starting out</option>
+        <option value="open-mics">Been to open mics</option>
+        <option value="semi-regular">Semi-regular performer</option>
+        <option value="professional">Professional / paid gigs</option>
+      </select>
+      <select name="style[]" multiple>
+        <option value="observational">Observational</option>
+        <option value="self-deprecating">Self-deprecating</option>
+        <option value="absurdist">Absurdist</option>
+        <option value="dad-jokes">Dad jokes</option>
+        <option value="dark">Dark comedy</option>
+        <option value="improv">Improv / wordplay</option>
+      </select>
+      <textarea name="first-joke"></textarea>
+    </form>
+    <form name="laugher-signup" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="laugher-signup" />
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="email" />
+      <select name="mood-boost">
+        <option value="daily">Daily — I need this every morning</option>
+        <option value="few-times">A few times a week</option>
+        <option value="whenever">Whenever I need a lift</option>
+      </select>
+      <input type="checkbox" name="interests[]" value="wholesome" />
+      <input type="checkbox" name="interests[]" value="dad-jokes" />
+      <input type="checkbox" name="interests[]" value="absurdist" />
+      <input type="checkbox" name="interests[]" value="dark" />
+      <input type="checkbox" name="interests[]" value="one-liners" />
+    </form>
+  </div>
+
+  <!-- SIGNUP FORMS -->
+  <section class="forms-section" id="comedian-signup">
+    <div class="section-label">Join the community</div>
+    <h2>Get in on the <em>joke</em></h2>
+
+    <div class="forms-grid">
+
+      <!-- ── COMEDIAN FORM ── -->
+      <div class="form-card comedian-form reveal" id="comedian-form-card">
+        <div class="form-card-header">
+          <span class="form-card-icon">🎤</span>
+          <h3>I'm a comedian</h3>
+          <p class="form-desc">Test your material, get real ratings, and level up your craft — one joke at a time.</p>
+        </div>
+
+        <!-- Success state (hidden until submission) -->
+        <div class="form-success" id="comedian-success">
+          <span class="success-icon">🎉</span>
+          <h4>You're in the lineup!</h4>
+          <p>We'll be in touch soon. Start thinking about your first joke — the crowd's waiting.</p>
+        </div>
+
+        <!-- The actual form -->
+        <div id="comedian-form-wrap">
+          <div class="field-group">
+            <div class="field-row">
+              <div class="field">
+                <label for="c-name">Your name</label>
+                <input type="text" id="c-name" name="name" placeholder="Jamie Lee" required />
+              </div>
+              <div class="field">
+                <label for="c-username">Stage name / username</label>
+                <input type="text" id="c-username" name="username" placeholder="@TimTheTestPilot" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="c-email">Email address</label>
+              <input type="email" id="c-email" name="email" placeholder="you@example.com" required />
+            </div>
+
+            <div class="field">
+              <label for="c-experience">Experience level</label>
+              <select id="c-experience" name="experience">
+                <option value="">Select your level →</option>
+                <option value="just-starting">Just starting out</option>
+                <option value="open-mics">Been to open mics</option>
+                <option value="semi-regular">Semi-regular performer</option>
+                <option value="professional">Professional / paid gigs</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Comedy styles (pick all that fit)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" name="style[]" value="observational" /> Observational</label>
+                <label class="checkbox-label"><input type="checkbox" name="style[]" value="self-deprecating" /> Self-deprecating</label>
+                <label class="checkbox-label"><input type="checkbox" name="style[]" value="absurdist" /> Absurdist</label>
+                <label class="checkbox-label"><input type="checkbox" name="style[]" value="dad-jokes" /> Dad jokes</label>
+                <label class="checkbox-label"><input type="checkbox" name="style[]" value="dark" /> Dark comedy</label>
+                <label class="checkbox-label"><input type="checkbox" name="style[]" value="improv" /> Improv / wordplay</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="c-joke">Drop your first joke (optional)</label>
+              <textarea id="c-joke" name="first-joke" placeholder="Give us a taste — we won't steal it. Every submission is timestamped and attributed to you."></textarea>
+            </div>
+
+            <p class="privacy-note">🔒 Your joke is timestamped on submission as proof of authorship. You retain full ownership. We only display it with your permission.</p>
+          </div>
+
+          <div class="form-error" id="comedian-error">Something went wrong. Please try again.</div>
+          <button type="button" class="btn-submit-comedian" id="comedian-submit-btn" onclick="submitForm('comedian')">
+            <span>🎤 Join as a Comedian</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── LAUGH-SEEKER FORM ── -->
+      <div class="form-card laugher-form reveal" style="transition-delay:0.15s" id="laugher-form-card">
+        <div class="form-card-header">
+          <span class="form-card-icon">😂</span>
+          <h3>I need laughs</h3>
+          <p class="form-desc">Get a personalised daily feed of fresh amateur comedy and help comedians improve — just by rating what makes you laugh.</p>
+        </div>
+
+        <!-- Success state -->
+        <div class="form-success" id="laugher-success">
+          <span class="success-icon">😄</span>
+          <h4>Your daily laughs await!</h4>
+          <p>Welcome aboard. Your personalised feed is being set up — expect something funny soon.</p>
+        </div>
+
+        <!-- The actual form -->
+        <div id="laugher-form-wrap">
+          <div class="field-group">
+            <div class="field-row">
+              <div class="field">
+                <label for="l-name">Your name</label>
+                <input type="text" id="l-name" name="name" placeholder="Alex" required />
+              </div>
+              <div class="field">
+                <label for="l-email">Email address</label>
+                <input type="email" id="l-email" name="email" placeholder="you@example.com" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="l-mood">How often do you want your laugh fix?</label>
+              <select id="l-mood" name="mood-boost">
+                <option value="">Select frequency →</option>
+                <option value="daily">Daily — I need this every morning</option>
+                <option value="few-times">A few times a week</option>
+                <option value="whenever">Whenever I need a lift</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>What makes you laugh? (pick all that fit)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="wholesome" /> 🌻 Wholesome &amp; feel-good</label>
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="dad-jokes" /> 👴 Dad jokes &amp; groaners</label>
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="absurdist" /> 🌀 Absurdist &amp; weird</label>
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="dark" /> 🖤 Dark &amp; dry humour</label>
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="one-liners" /> ⚡ Sharp one-liners</label>
+              </div>
+            </div>
+
+            <p class="privacy-note">No spam. Ever. Just the laughs you asked for. Unsubscribe any time — but we don't think you'll want to.</p>
+          </div>
+
+          <div class="form-error" id="laugher-error">Something went wrong. Please try again.</div>
+          <button type="button" class="btn-submit-laugher" id="laugher-submit-btn" onclick="submitForm('laugher')">
+            <span>😂 Send Me Daily Laughs</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
@@ -939,7 +1311,81 @@
       });
     });
 
-    // Smooth scroll for anchors
+    // ── NETLIFY FORM AJAX SUBMISSION ──
+    // Per Netlify docs: body must be URL-encoded, Content-Type must be
+    // application/x-www-form-urlencoded, and form-name must be included.
+    function submitForm(type) {
+      const isComedian = type === 'comedian';
+
+      // Gather field references
+      const nameEl    = document.getElementById(isComedian ? 'c-name'  : 'l-name');
+      const emailEl   = document.getElementById(isComedian ? 'c-email' : 'l-email');
+      const btnEl     = document.getElementById(isComedian ? 'comedian-submit-btn' : 'laugher-submit-btn');
+      const errorEl   = document.getElementById(isComedian ? 'comedian-error'      : 'laugher-error');
+      const successEl = document.getElementById(isComedian ? 'comedian-success'    : 'laugher-success');
+      const wrapEl    = document.getElementById(isComedian ? 'comedian-form-wrap'  : 'laugher-form-wrap');
+      const formName  = isComedian ? 'comedian-signup' : 'laugher-signup';
+
+      // Basic validation
+      if (!nameEl.value.trim() || !emailEl.value.trim()) {
+        errorEl.textContent = 'Please fill in your name and email.';
+        errorEl.classList.add('visible');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+        errorEl.textContent = 'Please enter a valid email address.';
+        errorEl.classList.add('visible');
+        return;
+      }
+
+      errorEl.classList.remove('visible');
+      btnEl.disabled = true;
+      btnEl.innerHTML = '<span>Sending…</span>';
+
+      // Build form data object
+      const data = { 'form-name': formName };
+
+      if (isComedian) {
+        data.name       = document.getElementById('c-name').value;
+        data.email      = document.getElementById('c-email').value;
+        data.username   = document.getElementById('c-username').value;
+        data.experience = document.getElementById('c-experience').value;
+        data['first-joke'] = document.getElementById('c-joke').value;
+        // Checkboxes — collect all checked comedy styles
+        const styles = [...document.querySelectorAll('#comedian-form-wrap input[name="style[]"]:checked')]
+          .map(el => el.value);
+        data['style'] = styles.join(', ');
+      } else {
+        data.name         = document.getElementById('l-name').value;
+        data.email        = document.getElementById('l-email').value;
+        data['mood-boost'] = document.getElementById('l-mood').value;
+        // Checkboxes — collect all checked interests
+        const interests = [...document.querySelectorAll('#laugher-form-wrap input[name="interests[]"]:checked')]
+          .map(el => el.value);
+        data['interests'] = interests.join(', ');
+      }
+
+      // URL-encode and POST — as required by Netlify Forms
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString()
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Network response not ok');
+          // Hide form, show success
+          wrapEl.style.display = 'none';
+          successEl.classList.add('visible');
+        })
+        .catch(() => {
+          btnEl.disabled = false;
+          btnEl.innerHTML = isComedian
+            ? '<span>🎤 Join as a Comedian</span>'
+            : '<span>😂 Send Me Daily Laughs</span>';
+          errorEl.textContent = 'Something went wrong. Please try again.';
+          errorEl.classList.add('visible');
+        });
+    }
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const target = document.querySelector(a.getAttribute('href'));
