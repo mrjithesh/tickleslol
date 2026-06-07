@@ -1,6 +1,6 @@
 {
-  "name": "Punchline – Comedy That Connects",
-  "short_name": "Punchline",
+  "name": "Tickles.LOL – Comedy That Connects",
+  "short_name": "Tickles.LOL",
   "description": "Where amateur comedians get real feedback and everyone gets real laughs for better mental health.",
   "start_url": "/",
   "display": "standalone",
@@ -27,7 +27,7 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Punchline Home Feed"
+      "label": "Tickles.LOL Home Feed"
     }
   ],
   "categories": ["entertainment", "social", "health"],
