@@ -36,6 +36,32 @@
       --mist: #e8f0e9;
     }
 
+    /* ── SKIP NAV (WCAG 2.4.1) ── */
+    .skip-nav {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--ink);
+      color: var(--cream);
+      padding: 0.75rem 1.5rem;
+      border-radius: 0 0 0.5rem 0.5rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      z-index: 9999;
+      text-decoration: none;
+      transition: top 0.2s;
+    }
+    .skip-nav:focus { top: 0; }
+
+    /* ── FOCUS STYLES (WCAG 2.4.7) ── */
+    :focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+    /* Remove default outline only when focus-visible is supported */
+    :focus:not(:focus-visible) { outline: none; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html { scroll-behavior: smooth; }
@@ -50,35 +76,116 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 2.5rem;
+      padding: 0 2.5rem; height: 64px;
       backdrop-filter: blur(16px);
-      background: rgba(253, 246, 227, 0.88);
+      background: rgba(253, 246, 227, 0.95);
       border-bottom: 1px solid rgba(26,10,0,0.08);
     }
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 0.04em;
-      color: var(--punch);
-      text-decoration: none;
+      font-size: 1.9rem; letter-spacing: 0.04em;
+      color: var(--punch); text-decoration: none; flex-shrink: 0;
     }
     .nav-logo span { color: var(--ink); }
-    .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a {
+    .nav-center { display: flex; align-items: center; gap: 0.25rem; height: 100%; }
+    .nav-item { position: relative; height: 100%; display: flex; align-items: center; }
+    .nav-item > a, .nav-trigger {
+      display: flex; align-items: center; gap: 0.3rem;
+      padding: 0 0.9rem; height: 100%;
       text-decoration: none; color: var(--ink);
-      font-size: 0.9rem; font-weight: 400; letter-spacing: 0.02em;
-      transition: color 0.2s;
+      font-size: 0.88rem; font-weight: 400;
+      background: none; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: color 0.2s; white-space: nowrap;
     }
-    .nav-links a:hover { color: var(--punch); }
+    .nav-item > a:hover, .nav-trigger:hover { color: var(--punch); }
+    .nav-item.active > a, .nav-item.active .nav-trigger { color: var(--punch); font-weight: 500; }
+    .chevron {
+      width: 10px; height: 10px; opacity: 0.45;
+      transition: transform 0.2s, opacity 0.2s; flex-shrink: 0;
+    }
+    .nav-item:hover .chevron, .nav-item:focus-within .chevron { transform: rotate(180deg); opacity: 1; }
+    .nav-dropdown {
+      position: absolute; top: 100%; left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      background: var(--cream); border: 1px solid rgba(26,10,0,0.1);
+      border-radius: 1rem; box-shadow: 0 16px 48px rgba(26,10,0,0.14);
+      padding: 0.6rem; min-width: 240px;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+    }
+    .nav-item:hover .nav-dropdown, .nav-item:focus-within .nav-dropdown {
+      opacity: 1; visibility: visible; pointer-events: all;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-dropdown.wide { min-width: 480px; display: grid; grid-template-columns: 1fr 1fr; gap: 0.15rem; }
+    .nav-dropdown a {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.75rem 0.9rem; border-radius: 0.6rem;
+      text-decoration: none; color: var(--ink); transition: background 0.15s;
+    }
+    .nav-dropdown a:hover { background: var(--warm); }
+    .drop-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 0.05rem; }
+    .drop-text { display: flex; flex-direction: column; gap: 0.1rem; }
+    .drop-label { font-size: 0.875rem; font-weight: 500; }
+    .drop-desc { font-size: 0.75rem; opacity: 0.55; line-height: 1.4; }
+    .drop-divider { grid-column: 1/-1; height: 1px; background: rgba(26,10,0,0.07); margin: 0.3rem 0.4rem; }
+    .drop-badge {
+      display: inline-block; background: var(--punch); color: var(--cream);
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.1rem 0.4rem;
+      border-radius: 100px; margin-left: 0.35rem; vertical-align: middle;
+    }
+    .nav-right { display: flex; align-items: center; gap: 0.6rem; }
+    .btn-nav-ghost {
+      color: var(--ink); font-size: 0.875rem; font-weight: 400;
+      text-decoration: none; padding: 0.5rem 0.9rem; border-radius: 100px;
+      border: 1.5px solid transparent; transition: border-color 0.2s;
+    }
+    .btn-nav-ghost:hover { border-color: rgba(26,10,0,0.2); }
     .btn-nav {
-      background: var(--ink); color: var(--cream);
-      padding: 0.55rem 1.4rem; border-radius: 100px;
+      background: var(--punch); color: var(--cream);
+      padding: 0.55rem 1.3rem; border-radius: 100px;
       font-size: 0.85rem; font-weight: 500;
-      text-decoration: none; transition: background 0.2s, transform 0.15s;
+      text-decoration: none; transition: background 0.2s, transform 0.15s; white-space: nowrap;
     }
-    .btn-nav:hover { background: var(--punch); transform: translateY(-1px); }
+    .btn-nav:hover { background: var(--ink); transform: translateY(-1px); }
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      width: 36px; height: 36px; padding: 6px;
+      background: none; border: none; cursor: pointer; border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: var(--warm); }
+    .nav-hamburger span { display: block; width: 100%; height: 2px; background: var(--ink); border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-drawer {
+      position: fixed; top: 64px; left: 0; right: 0;
+      background: var(--cream); border-bottom: 1px solid rgba(26,10,0,0.1);
+      box-shadow: 0 16px 40px rgba(26,10,0,0.12);
+      z-index: 199; overflow-y: auto; max-height: calc(100vh - 64px);
+      transform: translateY(-8px); opacity: 0;
+      transition: transform 0.25s, opacity 0.25s; pointer-events: none; display: none;
+    }
+    .nav-drawer.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+    .drawer-inner { padding: 1rem 1.5rem 2rem; }
+    .drawer-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--punch); padding: 0.5rem 0.75rem 0.25rem; display: block; }
+    .drawer-link {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.7rem 0.75rem; border-radius: 0.6rem;
+      text-decoration: none; color: var(--ink); font-size: 0.95rem; transition: background 0.15s;
+    }
+    .drawer-link:hover { background: var(--warm); }
+    .drawer-divider { height: 1px; background: rgba(26,10,0,0.08); margin: 0.75rem 0; }
+    .drawer-ctas { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(26,10,0,0.08); }
+    .btn-drawer-ghost { display: block; text-align: center; border: 1.5px solid rgba(26,10,0,0.2); color: var(--ink); font-size: 0.95rem; padding: 0.8rem; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+    .btn-drawer-ghost:hover { background: var(--warm); }
+    .btn-drawer-primary { display: block; text-align: center; background: var(--punch); color: var(--cream); font-size: 0.95rem; font-weight: 500; padding: 0.8rem; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+    .btn-drawer-primary:hover { background: var(--ink); }
 
     /* ── HERO ── */
     .hero {
@@ -152,7 +259,7 @@
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
       box-shadow: 0 4px 20px rgba(232,70,10,0.3);
     }
-    .btn-primary:hover { background: var(--punch-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,70,10,0.35); }
+    .btn-primary:hover { background: var(--punch-light); color: var(--ink); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,70,10,0.35); }
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 0.5rem;
       background: transparent; color: var(--ink);
@@ -303,7 +410,7 @@
       font-weight: 500; font-size: 0.95rem; text-decoration: none;
       transition: background 0.2s, transform 0.15s;
     }
-    .btn-path-laugher:hover { background: var(--sage); transform: translateY(-2px); }
+    .btn-path-laugher:hover { background: var(--sage); color: var(--ink); transform: translateY(-2px); }
 
     /* ── MENTAL HEALTH ── */
     .mental-health-section {
@@ -487,13 +594,13 @@
     }
     .footer-brand .nav-logo { font-size: 2.4rem; }
     .footer-brand p { font-size: 0.88rem; opacity: 0.5; margin-top: 0.5rem; max-width: 240px; line-height: 1.6; }
-    .footer-links h5 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 1rem; }
+    .footer-links h5 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-bottom: 1rem; }
     .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-    .footer-links a { color: var(--cream); text-decoration: none; font-size: 0.88rem; opacity: 0.7; transition: opacity 0.2s; }
+    .footer-links a { color: var(--cream); text-decoration: none; font-size: 0.88rem; opacity: 0.85; transition: opacity 0.2s; }
     .footer-links a:hover { opacity: 1; }
     .footer-bottom {
       display: flex; justify-content: space-between; align-items: center;
-      padding-top: 1.5rem; font-size: 0.8rem; opacity: 0.4; flex-wrap: wrap; gap: 1rem;
+      padding-top: 1.5rem; font-size: 0.8rem; opacity: 0.65; flex-wrap: wrap; gap: 1rem;
     }
     .footer-bottom .pwa-badge {
       display: flex; align-items: center; gap: 0.5rem;
@@ -591,7 +698,6 @@
       outline: none;
       transition: border-color 0.2s, background 0.2s;
       -webkit-appearance: none;
-      appearance: none;
     }
     .comedian-form .field input,
     .comedian-form .field select,
@@ -646,8 +752,9 @@
 
     /* Privacy note */
     .privacy-note {
-      font-size: 0.75rem; opacity: 0.45; margin-top: 0.5rem; line-height: 1.5;
+      font-size: 0.75rem; opacity: 0.6; margin-top: 0.5rem; line-height: 1.5;
     }
+    .laugher-form .privacy-note { color: var(--sage-dark); opacity: 1; }
 
     /* Submit buttons */
     .btn-submit-comedian {
@@ -700,11 +807,125 @@
     }
     .form-error.visible { display: block; }
 
+    /* ── PAGE VIEWS ── */
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+
+    /* Explore page */
+    .explore-header { background: var(--ink); color: var(--cream); padding: 7rem 4rem 4rem; }
+    .explore-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem,6vw,5.5rem); line-height:1; }
+    .explore-header h1 em { font-family: 'Fraunces', serif; font-style:italic; color: var(--gold); }
+    .explore-header p { font-family: 'Fraunces', serif; font-size:1.1rem; opacity:0.75; margin-top:1rem; max-width:500px; line-height:1.7; }
+    .explore-filters { display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:2rem; }
+    .filter-chip {
+      padding:0.4rem 1rem; border-radius:100px; border:1.5px solid rgba(255,255,255,0.2);
+      color:var(--cream); background:transparent; cursor:pointer; font-size:0.82rem;
+      font-family:'DM Sans',sans-serif; transition:all 0.2s;
+    }
+    .filter-chip:hover, .filter-chip.active { background:var(--punch); border-color:var(--punch); }
+    .explore-grid { padding:3rem 4rem; display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; background:var(--cream); }
+    .explore-sort { padding:1.5rem 4rem 0; display:flex; gap:1rem; align-items:center; background:var(--cream); }
+    .sort-label { font-size:0.82rem; opacity:0.5; }
+    .sort-btn { background:none; border:1px solid rgba(26,10,0,0.15); border-radius:100px; padding:0.3rem 0.8rem; font-size:0.8rem; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
+    .sort-btn.active, .sort-btn:hover { background:var(--ink); color:var(--cream); border-color:var(--ink); }
+
+    /* Comedians page */
+    .page-split { display:grid; grid-template-columns:1fr 1fr; min-height:100vh; }
+    .page-split-content { padding:8rem 4rem 4rem; display:flex; flex-direction:column; justify-content:center; }
+    .page-split-visual { background:var(--ink); padding:4rem 3rem; display:flex; flex-direction:column; justify-content:center; gap:1.5rem; }
+    .comedian-stat { background:rgba(255,255,255,0.06); border-radius:1rem; padding:1.5rem; border:1px solid rgba(255,255,255,0.08); }
+    .comedian-stat .cs-num { font-family:'Bebas Neue',sans-serif; font-size:3rem; color:var(--gold); line-height:1; }
+    .comedian-stat .cs-label { font-size:0.85rem; opacity:0.6; color:var(--cream); margin-top:0.3rem; }
+    .feature-list { list-style:none; display:flex; flex-direction:column; gap:1rem; margin:2rem 0; }
+    .feature-list li { display:flex; align-items:flex-start; gap:0.75rem; font-size:0.95rem; line-height:1.6; }
+    .feature-list li .fi { font-size:1.2rem; flex-shrink:0; }
+
+    /* Laughers page */
+    .laughers-hero { background:var(--mist); padding:8rem 4rem 5rem; text-align:center; }
+    .laughers-hero h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,7vw,6rem); line-height:0.95; }
+    .laughers-hero h1 em { font-family:'Fraunces',serif; font-style:italic; color:var(--sage-dark); }
+    .laughers-hero p { font-family:'Fraunces',serif; font-size:1.15rem; max-width:540px; margin:1.5rem auto 0; opacity:0.8; line-height:1.7; }
+    .benefits-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; padding:4rem; background:white; }
+    .benefit-card { padding:2rem; border-radius:1.2rem; background:var(--mist); }
+    .benefit-card .bi { font-size:2.2rem; margin-bottom:1rem; display:block; }
+    .benefit-card h4 { font-family:'Fraunces',serif; font-weight:700; font-size:1.1rem; margin-bottom:0.5rem; color:var(--sage-dark); }
+    .benefit-card p { font-size:0.88rem; line-height:1.65; opacity:0.75; }
+
+    /* Community page */
+    .community-hero { background:var(--punch); color:var(--cream); padding:8rem 4rem 5rem; }
+    .community-hero h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,6vw,5.5rem); line-height:1; color:var(--cream); }
+    .community-hero h1 em { font-family:'Fraunces',serif; font-style:italic; color:var(--gold); }
+    .community-hero p { font-family:'Fraunces',serif; font-size:1.1rem; opacity:0.9; margin-top:1rem; max-width:520px; line-height:1.7; }
+    .community-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; padding:4rem; background:var(--cream); }
+    .community-card { border-radius:1.2rem; overflow:hidden; background:white; box-shadow:0 4px 20px rgba(26,10,0,0.07); transition:transform 0.3s; }
+    .community-card:hover { transform:translateY(-4px); }
+    .community-card-img { height:180px; display:flex; align-items:center; justify-content:center; font-size:4rem; }
+    .community-card-body { padding:1.5rem; }
+    .community-card-body h4 { font-family:'Fraunces',serif; font-weight:700; font-size:1.05rem; margin-bottom:0.5rem; }
+    .community-card-body p { font-size:0.85rem; line-height:1.6; opacity:0.7; }
+    .community-card-tag { display:inline-block; background:var(--warm); font-size:0.72rem; font-weight:500; padding:0.2rem 0.6rem; border-radius:100px; margin-bottom:0.6rem; text-transform:uppercase; letter-spacing:0.06em; }
+
+    /* Pricing page */
+    .pricing-hero { background:var(--cream); padding:8rem 4rem 4rem; text-align:center; }
+    .pricing-hero h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,6vw,5rem); line-height:1; }
+    .pricing-hero h1 em { font-family:'Fraunces',serif; font-style:italic; color:var(--punch); }
+    .pricing-hero p { font-family:'Fraunces',serif; font-size:1.1rem; max-width:480px; margin:1rem auto 0; opacity:0.75; line-height:1.7; }
+    .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; padding:3rem 4rem 5rem; }
+    .pricing-card { border-radius:1.5rem; padding:2.5rem; background:white; border:1.5px solid rgba(26,10,0,0.1); position:relative; transition:transform 0.3s, box-shadow 0.3s; }
+    .pricing-card:hover { transform:translateY(-4px); box-shadow:0 16px 48px rgba(26,10,0,0.1); }
+    .pricing-card.featured { background:var(--ink); color:var(--cream); border-color:transparent; box-shadow:0 16px 48px rgba(26,10,0,0.25); }
+    .pricing-card.featured:hover { transform:translateY(-6px); }
+    .featured-badge { position:absolute; top:-0.75rem; left:50%; transform:translateX(-50%); background:var(--punch); color:var(--cream); font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 1rem; border-radius:100px; white-space:nowrap; }
+    .price-tier { font-size:0.78rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1rem; }
+    .pricing-card:not(.featured) .price-tier { color:var(--punch); }
+    .pricing-card.featured .price-tier { color:var(--gold); }
+    .price-amount { font-family:'Bebas Neue',sans-serif; font-size:3.5rem; line-height:1; margin-bottom:0.25rem; }
+    .price-period { font-size:0.82rem; opacity:0.5; margin-bottom:1.5rem; }
+    .price-desc { font-family:'Fraunces',serif; font-size:0.95rem; line-height:1.6; margin-bottom:1.5rem; }
+    .pricing-card:not(.featured) .price-desc { opacity:0.75; }
+    .pricing-card.featured .price-desc { opacity:0.85; }
+    .price-features { list-style:none; display:flex; flex-direction:column; gap:0.6rem; margin-bottom:2rem; }
+    .price-features li { display:flex; align-items:flex-start; gap:0.6rem; font-size:0.875rem; }
+    .price-features li::before { content:'✓'; font-weight:700; flex-shrink:0; }
+    .pricing-card:not(.featured) .price-features li::before { color:var(--sage-dark); }
+    .pricing-card.featured .price-features li::before { color:var(--gold); }
+    .btn-price {
+      display:block; text-align:center; padding:0.85rem; border-radius:100px;
+      font-weight:500; font-size:0.95rem; text-decoration:none; transition:all 0.2s;
+    }
+    .btn-price-outline { border:1.5px solid rgba(26,10,0,0.2); color:var(--ink); }
+    .btn-price-outline:hover { background:var(--ink); color:var(--cream); }
+    .btn-price-primary { background:var(--punch); color:var(--cream); }
+    .btn-price-primary:hover { background:var(--punch-light); color:var(--ink); }
+    .btn-price-ghost { border:1.5px solid rgba(255,255,255,0.25); color:var(--cream); }
+    .btn-price-ghost:hover { background:rgba(255,255,255,0.1); }
+
+    /* About page */
+    .about-hero { background:var(--cream); padding:8rem 4rem 5rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .about-mission { background:var(--ink); color:var(--cream); padding:5rem 4rem; }
+    .about-mission h2 { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,5vw,4rem); color:var(--gold); margin-bottom:1.5rem; }
+    .about-mission p { font-family:'Fraunces',serif; font-size:1.05rem; line-height:1.8; opacity:0.85; max-width:600px; }
+    .values-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2rem; padding:4rem; background:var(--mist); }
+    .value-card { background:white; border-radius:1.2rem; padding:2rem; }
+    .value-card .vi { font-size:2rem; margin-bottom:1rem; display:block; }
+    .value-card h4 { font-family:'Fraunces',serif; font-weight:700; font-size:1.1rem; margin-bottom:0.5rem; color:var(--sage-dark); }
+    .value-card p { font-size:0.875rem; line-height:1.65; opacity:0.75; }
+
+    /* Sub-page shared */
+    .page-cta { background:var(--ink); color:var(--cream); padding:5rem 4rem; text-align:center; }
+    .page-cta h2 { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,5vw,4rem); margin-bottom:1rem; }
+    .page-cta h2 em { font-family:'Fraunces',serif; font-style:italic; color:var(--gold); }
+    .page-cta p { font-family:'Fraunces',serif; font-size:1rem; opacity:0.75; max-width:440px; margin:0 auto 2rem; line-height:1.7; }
+    .page-cta-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+    .btn-cta-gold { background:var(--gold); color:var(--ink); padding:0.9rem 2rem; border-radius:100px; font-weight:600; text-decoration:none; transition:all 0.2s; }
+    .btn-cta-gold:hover { background:var(--punch); color:var(--cream); }
+
     /* ── MOBILE ── */
     @media (max-width: 900px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; padding: 5rem 1.5rem 3rem; }
+      nav { padding: 0 1.25rem; }
+      .nav-center, .nav-right .btn-nav-ghost { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-drawer { display: block; }
       .hero-visual { display: none; }
       section { padding: 4rem 1.5rem; }
       .two-paths { grid-template-columns: 1fr; }
@@ -721,21 +942,224 @@
       footer { padding: 2rem 1.5rem; }
       .footer-inner { flex-direction: column; }
       .footer-bottom { flex-direction: column; }
+      /* New pages mobile */
+      .explore-grid { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+      .explore-header { padding: 5rem 1.5rem 3rem; }
+      .explore-sort { padding: 1rem 1.5rem 0; }
+      .explore-filters { gap: 0.4rem; }
+      .page-split { grid-template-columns: 1fr; }
+      .page-split-content { padding: 5rem 1.5rem 3rem; }
+      .page-split-visual { padding: 2rem 1.5rem; }
+      .laughers-hero { padding: 5rem 1.5rem 3rem; }
+      .benefits-grid { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+      .community-hero { padding: 5rem 1.5rem 3rem; }
+      .community-grid { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+      .pricing-hero { padding: 5rem 1.5rem 3rem; }
+      .pricing-grid { grid-template-columns: 1fr; padding: 2rem 1.5rem 3rem; }
+      .about-hero { grid-template-columns: 1fr; padding: 5rem 1.5rem 3rem; }
+      .about-mission { padding: 3rem 1.5rem; }
+      .values-grid { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+      .page-cta { padding: 3rem 1.5rem; }
+      .page-cta-btns { flex-direction: column; align-items: center; }
+    }
+
+    /* ── REDUCED MOTION (WCAG 2.3) ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .hero-content > *, .hero-visual {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Skip navigation for keyboard users (WCAG 2.4.1) -->
+  <a href="#main-content" class="skip-nav">Skip to main content</a>
+
   <!-- NAV -->
-  <nav>
-    <a href="#" class="nav-logo">Tickles<span>.LOL</span></a>
-    <div class="nav-links">
-      <a href="#how-it-works">How it works</a>
-      <a href="#mental-health">Why it matters</a>
-      <a href="#feed">See jokes</a>
-      <a href="#signup" class="btn-nav">Join free →</a>
+  <nav aria-label="Main navigation">
+    <a href="#" class="nav-logo" aria-label="Tickles.LOL — home" onclick="showPage('home');return false;">Tickles<span>.LOL</span></a>
+
+    <!-- Desktop nav -->
+    <div class="nav-center" role="menubar">
+
+      <!-- Explore dropdown -->
+      <div class="nav-item" role="none">
+        <button class="nav-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Explore
+          <svg class="chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav-dropdown wide" role="menu">
+          <a href="#" role="menuitem" onclick="showPage('explore','all');return false;">
+            <span class="drop-icon" aria-hidden="true">🔥</span>
+            <span class="drop-text"><span class="drop-label">Top Rated</span><span class="drop-desc">The highest-scoring jokes right now</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('explore','fresh');return false;">
+            <span class="drop-icon" aria-hidden="true">✨</span>
+            <span class="drop-text"><span class="drop-label">Fresh &amp; New</span><span class="drop-desc">Just submitted — be first to rate</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('explore','trending');return false;">
+            <span class="drop-icon" aria-hidden="true">📈</span>
+            <span class="drop-text"><span class="drop-label">Trending</span><span class="drop-desc">Rising fast this week</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('explore','dad');return false;">
+            <span class="drop-icon" aria-hidden="true">👴</span>
+            <span class="drop-text"><span class="drop-label">Dad Jokes</span><span class="drop-desc">Groan-worthy classics</span></span>
+          </a>
+          <div class="drop-divider" role="separator"></div>
+          <a href="#" role="menuitem" onclick="showPage('explore','absurdist');return false;">
+            <span class="drop-icon" aria-hidden="true">🌀</span>
+            <span class="drop-text"><span class="drop-label">Absurdist</span><span class="drop-desc">Weird, wonderful &amp; unexpected</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('explore','dark');return false;">
+            <span class="drop-icon" aria-hidden="true">🖤</span>
+            <span class="drop-text"><span class="drop-label">Dark &amp; Dry</span><span class="drop-desc">For the discerning cynic</span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Comedians dropdown -->
+      <div class="nav-item" role="none">
+        <button class="nav-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Comedians
+          <svg class="chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav-dropdown" role="menu">
+          <a href="#" role="menuitem" onclick="showPage('comedians');return false;">
+            <span class="drop-icon" aria-hidden="true">🎤</span>
+            <span class="drop-text"><span class="drop-label">Why Join?</span><span class="drop-desc">See what Tickles.LOL does for your craft</span></span>
+          </a>
+          <a href="#comedian-signup" role="menuitem">
+            <span class="drop-icon" aria-hidden="true">✍️</span>
+            <span class="drop-text"><span class="drop-label">Submit a Joke <span class="drop-badge">Free</span></span><span class="drop-desc">Post and start getting feedback</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('community');return false;">
+            <span class="drop-icon" aria-hidden="true">🏆</span>
+            <span class="drop-text"><span class="drop-label">Weekly Challenges</span><span class="drop-desc">Compete on a theme, win exposure</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('pricing');return false;">
+            <span class="drop-icon" aria-hidden="true">📊</span>
+            <span class="drop-text"><span class="drop-label">Tickles Pro</span><span class="drop-desc">Detailed analytics &amp; unlimited posts</span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Laughers dropdown -->
+      <div class="nav-item" role="none">
+        <button class="nav-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Laughers
+          <svg class="chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav-dropdown" role="menu">
+          <a href="#" role="menuitem" onclick="showPage('laughers');return false;">
+            <span class="drop-icon" aria-hidden="true">😂</span>
+            <span class="drop-text"><span class="drop-label">Why Join?</span><span class="drop-desc">Your daily laugh habit, explained</span></span>
+          </a>
+          <a href="#laugher-signup" role="menuitem">
+            <span class="drop-icon" aria-hidden="true">📬</span>
+            <span class="drop-text"><span class="drop-label">Get Daily Laughs <span class="drop-badge">Free</span></span><span class="drop-desc">Personalised feed straight to you</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('laughers');return false;">
+            <span class="drop-icon" aria-hidden="true">🌿</span>
+            <span class="drop-text"><span class="drop-label">Mental Health Science</span><span class="drop-desc">Why laughter isn't just fun</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('pricing');return false;">
+            <span class="drop-icon" aria-hidden="true">⭐</span>
+            <span class="drop-text"><span class="drop-label">Tickles Plus</span><span class="drop-desc">Ad-free + curated collections</span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Community -->
+      <div class="nav-item" role="none">
+        <button class="nav-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+          Community
+          <svg class="chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav-dropdown" role="menu">
+          <a href="#" role="menuitem" onclick="showPage('community');return false;">
+            <span class="drop-icon" aria-hidden="true">📝</span>
+            <span class="drop-text"><span class="drop-label">Blog</span><span class="drop-desc">Stories, tips &amp; comedian spotlights</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('community');return false;">
+            <span class="drop-icon" aria-hidden="true">🏅</span>
+            <span class="drop-text"><span class="drop-label">Leaderboard</span><span class="drop-desc">Top comedians this month</span></span>
+          </a>
+          <a href="#" role="menuitem" onclick="showPage('community');return false;">
+            <span class="drop-icon" aria-hidden="true">🎯</span>
+            <span class="drop-text"><span class="drop-label">Challenges</span><span class="drop-desc">Weekly themed comedy competitions</span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Pricing -->
+      <div class="nav-item" role="none">
+        <a href="#" role="menuitem" onclick="showPage('pricing');return false;">Pricing</a>
+      </div>
+
     </div>
+
+    <!-- Desktop right -->
+    <div class="nav-right">
+      <a href="#comedian-signup" class="btn-nav-ghost">Log in</a>
+      <a href="#signup" class="btn-nav" onclick="showPage('home');setTimeout(()=>document.getElementById('signup').scrollIntoView({behavior:'smooth'}),50);return false;">Join free →</a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- Mobile drawer -->
+  <div class="nav-drawer" id="nav-drawer" role="dialog" aria-label="Navigation menu">
+    <div class="drawer-inner">
+      <span class="drawer-label">Explore</span>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('explore','all');return false;"><span aria-hidden="true">🔥</span> Top Rated</a>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('explore','fresh');return false;"><span aria-hidden="true">✨</span> Fresh &amp; New</a>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('explore','trending');return false;"><span aria-hidden="true">📈</span> Trending</a>
+
+      <div class="drawer-divider"></div>
+      <span class="drawer-label">Comedians</span>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('comedians');return false;"><span aria-hidden="true">🎤</span> Why join as a comedian?</a>
+      <a href="#comedian-signup" class="drawer-link" onclick="closeMobile();"><span aria-hidden="true">✍️</span> Submit a joke</a>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('pricing');return false;"><span aria-hidden="true">📊</span> Tickles Pro</a>
+
+      <div class="drawer-divider"></div>
+      <span class="drawer-label">Laughers</span>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('laughers');return false;"><span aria-hidden="true">😂</span> Why join as a laugher?</a>
+      <a href="#laugher-signup" class="drawer-link" onclick="closeMobile();"><span aria-hidden="true">📬</span> Get daily laughs</a>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('pricing');return false;"><span aria-hidden="true">⭐</span> Tickles Plus</a>
+
+      <div class="drawer-divider"></div>
+      <span class="drawer-label">More</span>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('community');return false;"><span aria-hidden="true">📝</span> Blog &amp; Community</a>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('pricing');return false;"><span aria-hidden="true">💳</span> Pricing</a>
+      <a href="#" class="drawer-link" onclick="closeMobile();showPage('about');return false;"><span aria-hidden="true">💡</span> About Tickles.LOL</a>
+
+      <div class="drawer-ctas">
+        <a href="#comedian-signup" class="btn-drawer-ghost" onclick="closeMobile();">Log in</a>
+        <a href="#signup" class="btn-drawer-primary" onclick="closeMobile();showPage('home');setTimeout(()=>document.getElementById('signup').scrollIntoView({behavior:'smooth'}),50);return false;">Join free →</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+  <!-- ══ HOME PAGE ══ -->
+  <div id="page-home" class="page-view active">
 
   <!-- HERO -->
   <section class="hero" style="padding-top:6rem">
@@ -753,8 +1177,8 @@
         A community where <strong>aspiring comedians</strong> get honest feedback on their jokes — and everyone else gets a <strong>daily dose of laughter</strong> for their mental health.
       </p>
       <div class="hero-ctas">
-        <a href="#comedian-signup" class="btn-primary">🎤 I've got jokes →</a>
-        <a href="#laugher-signup" class="btn-secondary">😂 I need laughs →</a>
+        <a href="#comedian-signup" class="btn-primary"><span aria-hidden="true">🎤</span> I've got jokes →</a>
+        <a href="#laugher-signup" class="btn-secondary"><span aria-hidden="true">😂</span> I need laughs →</a>
       </div>
     </div>
 
@@ -763,8 +1187,8 @@
         <div class="joke-tag">⭐ Top Rated This Week</div>
         <div class="joke-text">My GPS told me to take a right at the next light. I said "finally, someone who gets me." I always feel so validated by technology.</div>
         <div class="joke-author">— @TimTheTestPilot · Comedy Rookie</div>
-        <div class="joke-ratings">
-          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        <div class="joke-ratings" role="img" aria-label="Rated 4.8 out of 5 stars, 142 ratings">
+          <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
           <span class="rating-count">4.8 · 142 ratings</span>
         </div>
       </div>
@@ -772,8 +1196,8 @@
       <div class="joke-card" style="margin-left:-1rem; margin-top:-0.5rem">
         <div class="joke-tag">💬 New Feedback Received</div>
         <div class="joke-text">"The timing on the punchline is chef's kiss. Maybe cut the second sentence though?" — Sarah_LOL</div>
-        <div class="joke-ratings">
-          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+        <div class="joke-ratings" role="img" aria-label="Rated 4.2 out of 5 stars, 89 ratings">
+          <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star empty" aria-hidden="true">★</span>
           <span class="rating-count">4.2 · 89 ratings</span>
         </div>
       </div>
@@ -783,12 +1207,12 @@
           <div class="joke-tag">😂 Laugh Score</div>
           <div class="joke-text">I asked my dog what two minus two is. He said nothing.</div>
           <div class="joke-author">— @DadJokeDave</div>
-          <div class="joke-ratings">
-            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+          <div class="joke-ratings" role="img" aria-label="Rated 4.5 out of 5 stars, 203 ratings">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star empty" aria-hidden="true">★</span>
             <span class="rating-count">4.5 · 203 ratings</span>
           </div>
         </div>
-        <span class="floating-tag" style="bottom:-0.8rem;right:-1rem">🏆 Trending</span>
+        <span class="floating-tag" aria-hidden="true" style="bottom:-0.8rem;right:-1rem">🏆 Trending</span>
       </div>
     </div>
   </section>
@@ -819,7 +1243,7 @@
     <h2>Choose your <em>path</em></h2>
     <div class="two-paths">
       <div class="path-card comedian reveal">
-        <span class="path-icon">🎤</span>
+        <span class="path-icon" aria-hidden="true">🎤</span>
         <h3>I'm a Comedian</h3>
         <p>You've got jokes. Now find out if they actually land — before the open mic night.</p>
         <ul class="path-features">
@@ -833,7 +1257,7 @@
       </div>
 
       <div class="path-card laugher reveal" style="transition-delay:0.15s">
-        <span class="path-icon">😂</span>
+        <span class="path-icon" aria-hidden="true">😂</span>
         <h3>I Need a Laugh</h3>
         <p>Science says laughter reduces stress, anxiety, and pain. Tickles.LOL is your daily dose.</p>
         <ul class="path-features">
@@ -863,21 +1287,21 @@
       </div>
       <div class="mh-visual reveal" style="transition-delay:0.2s">
         <div class="mh-stat-card">
-          <div class="mh-stat-icon">🧠</div>
+          <div class="mh-stat-icon" aria-hidden="true">🧠</div>
           <div class="mh-stat-text">
             <strong>Laughter reduces cortisol</strong>
             The body's stress hormone drops measurably after sustained laughter
           </div>
         </div>
         <div class="mh-stat-card">
-          <div class="mh-stat-icon">💪</div>
+          <div class="mh-stat-icon" aria-hidden="true">💪</div>
           <div class="mh-stat-text">
             <strong>Boosts immune function</strong>
             Regular laughter is linked to increased immune cell production
           </div>
         </div>
         <div class="mh-stat-card">
-          <div class="mh-stat-icon">🤝</div>
+          <div class="mh-stat-icon" aria-hidden="true">🤝</div>
           <div class="mh-stat-text">
             <strong>Builds social bonds</strong>
             Shared humour is one of the fastest ways to feel human connection
@@ -898,19 +1322,19 @@
     <div class="steps-grid">
       <div class="step reveal">
         <div class="step-number">01</div>
-        <div class="step-icon">✍️</div>
+        <div class="step-icon" aria-hidden="true">✍️</div>
         <h4>Sign up & choose your path</h4>
         <p>Join as a comedian, a laughter-seeker, or both. Your profile sets up your feed and experience from day one.</p>
       </div>
       <div class="step reveal" style="transition-delay:0.1s">
         <div class="step-number">02</div>
-        <div class="step-icon">🎭</div>
+        <div class="step-icon" aria-hidden="true">🎭</div>
         <h4>Post or browse</h4>
         <p>Comedians drop their material. Laughers get a daily personalised feed. Everyone rates, everyone benefits.</p>
       </div>
       <div class="step reveal" style="transition-delay:0.2s">
         <div class="step-number">03</div>
-        <div class="step-icon">📈</div>
+        <div class="step-icon" aria-hidden="true">📈</div>
         <h4>Grow together</h4>
         <p>Comedians level up their craft with real data. Laughers build a habit that actually sticks — because it's genuinely fun.</p>
       </div>
@@ -925,7 +1349,7 @@
       <div class="feed-joke-card reveal">
         <div class="feed-card-header">
           <div class="comedian-badge">
-            <div class="comedian-avatar" style="background:#fde8d8">🦉</div>
+            <div class="comedian-avatar" aria-hidden="true" style="background:#fde8d8">🦉</div>
             <div>
               <div class="comedian-name">@NightOwlNick</div>
               <div class="comedian-level">Seasoned Heckler</div>
@@ -943,9 +1367,9 @@
             <span class="rating-count" style="font-size:0.78rem;margin-left:0.4rem;opacity:0.6">4.3 · 87</span>
           </div>
           <div class="reaction-row">
-            <button class="reaction-btn active">😂</button>
-            <button class="reaction-btn">👏</button>
-            <button class="reaction-btn">💬</button>
+            <button class="reaction-btn active" aria-label="Laugh reaction" aria-pressed="true">😂</button>
+            <button class="reaction-btn" aria-label="Applause reaction" aria-pressed="false">👏</button>
+            <button class="reaction-btn" aria-label="Comment on joke" aria-pressed="false">💬</button>
           </div>
         </div>
       </div>
@@ -953,7 +1377,7 @@
       <div class="feed-joke-card reveal" style="transition-delay:0.1s">
         <div class="feed-card-header">
           <div class="comedian-badge">
-            <div class="comedian-avatar" style="background:#e8f4e8">🌱</div>
+            <div class="comedian-avatar" aria-hidden="true" style="background:#e8f4e8">🌱</div>
             <div>
               <div class="comedian-name">@GrowingGabs</div>
               <div class="comedian-level">Comedy Seedling</div>
@@ -971,9 +1395,9 @@
             <span class="rating-count" style="font-size:0.78rem;margin-left:0.4rem;opacity:0.6">4.8 · 212</span>
           </div>
           <div class="reaction-row">
-            <button class="reaction-btn">😂</button>
-            <button class="reaction-btn active">👏</button>
-            <button class="reaction-btn">💬</button>
+            <button class="reaction-btn" aria-label="Laugh reaction" aria-pressed="false">😂</button>
+            <button class="reaction-btn active" aria-label="Applause reaction" aria-pressed="true">👏</button>
+            <button class="reaction-btn" aria-label="Comment on joke" aria-pressed="false">💬</button>
           </div>
         </div>
       </div>
@@ -981,7 +1405,7 @@
       <div class="feed-joke-card reveal" style="transition-delay:0.2s">
         <div class="feed-card-header">
           <div class="comedian-badge">
-            <div class="comedian-avatar" style="background:#fff3cd">🔥</div>
+            <div class="comedian-avatar" aria-hidden="true" style="background:#fff3cd">🔥</div>
             <div>
               <div class="comedian-name">@SunflowerStan</div>
               <div class="comedian-level">Rising Star</div>
@@ -999,9 +1423,9 @@
             <span class="rating-count" style="font-size:0.78rem;margin-left:0.4rem;opacity:0.6">4.1 · 54</span>
           </div>
           <div class="reaction-row">
-            <button class="reaction-btn">😂</button>
-            <button class="reaction-btn">👏</button>
-            <button class="reaction-btn active">💬</button>
+            <button class="reaction-btn" aria-label="Laugh reaction" aria-pressed="false">😂</button>
+            <button class="reaction-btn" aria-label="Applause reaction" aria-pressed="false">👏</button>
+            <button class="reaction-btn active" aria-label="Comment on joke" aria-pressed="true">💬</button>
           </div>
         </div>
       </div>
@@ -1016,7 +1440,7 @@
       <div class="testi-card reveal">
         <p class="testi-quote">"I've been doing open mics for two years but never knew which jokes actually worked until Tickles.LOL. The feedback is genuinely useful — not just emojis."</p>
         <div class="testi-author">
-          <div class="testi-avatar">🎙️</div>
+          <div class="testi-avatar" aria-hidden="true">🎙️</div>
           <div>
             <div class="testi-name">Priya M.</div>
             <div class="testi-role">Amateur standup · Melbourne</div>
@@ -1026,7 +1450,7 @@
       <div class="testi-card reveal" style="transition-delay:0.1s">
         <p class="testi-quote">"I signed up for laughs, stayed for the community. I spend 10 minutes on here every morning and I genuinely start the day in a better mood."</p>
         <div class="testi-author">
-          <div class="testi-avatar">☀️</div>
+          <div class="testi-avatar" aria-hidden="true">☀️</div>
           <div>
             <div class="testi-name">James T.</div>
             <div class="testi-role">Laughter seeker · Sydney</div>
@@ -1036,7 +1460,7 @@
       <div class="testi-card reveal" style="transition-delay:0.2s">
         <p class="testi-quote">"My therapist actually suggested finding more moments of joy. I told him about Tickles.LOL and he asked for the link. That felt like a win."</p>
         <div class="testi-author">
-          <div class="testi-avatar">🌿</div>
+          <div class="testi-avatar" aria-hidden="true">🌿</div>
           <div>
             <div class="testi-name">Aisha K.</div>
             <div class="testi-role">Daily reader · Auckland</div>
@@ -1048,14 +1472,14 @@
 
   <!-- CTA -->
   <section class="cta-section" id="signup">
-    <div class="section-label" style="color:rgba(255,255,255,0.5)">Ready?</div>
+    <div class="section-label" style="color:rgba(255,255,255,0.95)">Ready?</div>
     <h2>Drop a joke.<br><em>Make someone's day.</em></h2>
     <p>Join thousands of comedians and laugh-seekers building a lighter, funnier, genuinely better-feeling world — one tickle at a time.</p>
     <div class="cta-buttons">
-      <a href="#comedian-signup" class="btn-cta-light">🎤 I'm a comedian</a>
-      <a href="#laugher-signup" class="btn-cta-outline">😂 I need laughs</a>
+      <a href="#comedian-signup" class="btn-cta-light"><span aria-hidden="true">🎤</span> I'm a comedian</a>
+      <a href="#laugher-signup" class="btn-cta-outline"><span aria-hidden="true">😂</span> I need laughs</a>
     </div>
-    <p style="font-size:0.85rem;margin-top:1.5rem;opacity:0.6">Free forever. No algorithm guilt. Just laughs.</p>
+    <p style="font-size:0.85rem;margin-top:1.5rem;color:rgba(255,255,255,0.85)">Free forever. No algorithm guilt. Just laughs.</p>
   </section>
 
   <!-- ═══════════════════════════════════════
@@ -1115,14 +1539,14 @@
       <!-- ── COMEDIAN FORM ── -->
       <div class="form-card comedian-form reveal" id="comedian-form-card">
         <div class="form-card-header">
-          <span class="form-card-icon">🎤</span>
+          <span class="form-card-icon" aria-hidden="true">🎤</span>
           <h3>I'm a comedian</h3>
           <p class="form-desc">Test your material, get real ratings, and level up your craft — one joke at a time.</p>
         </div>
 
         <!-- Success state (hidden until submission) -->
-        <div class="form-success" id="comedian-success">
-          <span class="success-icon">🎉</span>
+        <div class="form-success" id="comedian-success" role="status" aria-live="polite">
+          <span class="success-icon" aria-hidden="true">🎉</span>
           <h4>You're in the lineup!</h4>
           <p>We'll be in touch soon. Start thinking about your first joke — the crowd's waiting.</p>
         </div>
@@ -1177,9 +1601,9 @@
             <p class="privacy-note">🔒 Your joke is timestamped on submission as proof of authorship. You retain full ownership. We only display it with your permission.</p>
           </div>
 
-          <div class="form-error" id="comedian-error">Something went wrong. Please try again.</div>
+          <div class="form-error" id="comedian-error" role="alert" aria-live="assertive">Something went wrong. Please try again.</div>
           <button type="button" class="btn-submit-comedian" id="comedian-submit-btn" onclick="submitForm('comedian')">
-            <span>🎤 Join as a Comedian</span>
+            <span aria-hidden="true">🎤</span> <span>Join as a Comedian</span>
           </button>
         </div>
       </div>
@@ -1187,14 +1611,14 @@
       <!-- ── LAUGH-SEEKER FORM ── -->
       <div class="form-card laugher-form reveal" style="transition-delay:0.15s" id="laugher-form-card">
         <div class="form-card-header">
-          <span class="form-card-icon">😂</span>
+          <span class="form-card-icon" aria-hidden="true">😂</span>
           <h3>I need laughs</h3>
           <p class="form-desc">Get a personalised daily feed of fresh amateur comedy and help comedians improve — just by rating what makes you laugh.</p>
         </div>
 
         <!-- Success state -->
-        <div class="form-success" id="laugher-success">
-          <span class="success-icon">😄</span>
+        <div class="form-success" id="laugher-success" role="status" aria-live="polite">
+          <span class="success-icon" aria-hidden="true">😄</span>
           <h4>Your daily laughs await!</h4>
           <p>Welcome aboard. Your personalised feed is being set up — expect something funny soon.</p>
         </div>
@@ -1226,20 +1650,20 @@
             <div class="field">
               <label>What makes you laugh? (pick all that fit)</label>
               <div class="checkbox-group">
-                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="wholesome" /> 🌻 Wholesome &amp; feel-good</label>
-                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="dad-jokes" /> 👴 Dad jokes &amp; groaners</label>
-                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="absurdist" /> 🌀 Absurdist &amp; weird</label>
-                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="dark" /> 🖤 Dark &amp; dry humour</label>
-                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="one-liners" /> ⚡ Sharp one-liners</label>
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="wholesome" /> <span aria-hidden="true">🌻</span> Wholesome &amp; feel-good</label>
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="dad-jokes" /> <span aria-hidden="true">👴</span> Dad jokes &amp; groaners</label>
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="absurdist" /> <span aria-hidden="true">🌀</span> Absurdist &amp; weird</label>
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="dark" /> <span aria-hidden="true">🖤</span> Dark &amp; dry humour</label>
+                <label class="checkbox-label"><input type="checkbox" name="interests[]" value="one-liners" /> <span aria-hidden="true">⚡</span> Sharp one-liners</label>
               </div>
             </div>
 
             <p class="privacy-note">No spam. Ever. Just the laughs you asked for. Unsubscribe any time — but we don't think you'll want to.</p>
           </div>
 
-          <div class="form-error" id="laugher-error">Something went wrong. Please try again.</div>
+          <div class="form-error" id="laugher-error" role="alert" aria-live="assertive">Something went wrong. Please try again.</div>
           <button type="button" class="btn-submit-laugher" id="laugher-submit-btn" onclick="submitForm('laugher')">
-            <span>😂 Send Me Daily Laughs</span>
+            <span aria-hidden="true">😂</span> <span>Send Me Daily Laughs</span>
           </button>
         </div>
       </div>
@@ -1247,8 +1671,331 @@
     </div>
   </section>
 
+  </div><!-- end page-home -->
+
+  <!-- ══ EXPLORE PAGE ══ -->
+  <div id="page-explore" class="page-view">
+    <div class="explore-header">
+      <p class="section-label" style="color:var(--gold)">Browse jokes</p>
+      <h1>Find what<br><em>makes you laugh</em></h1>
+      <p>Fresh material from amateur comedians around the world. Rate what lands, skip what doesn't — your feedback shapes every comedian's craft.</p>
+      <div class="explore-filters" role="group" aria-label="Filter by category">
+        <button class="filter-chip active" onclick="setFilter(this,'all')">🔥 All</button>
+        <button class="filter-chip" onclick="setFilter(this,'fresh')">✨ Fresh</button>
+        <button class="filter-chip" onclick="setFilter(this,'trending')">📈 Trending</button>
+        <button class="filter-chip" onclick="setFilter(this,'dad')">👴 Dad Jokes</button>
+        <button class="filter-chip" onclick="setFilter(this,'absurdist')">🌀 Absurdist</button>
+        <button class="filter-chip" onclick="setFilter(this,'dark')">🖤 Dark &amp; Dry</button>
+        <button class="filter-chip" onclick="setFilter(this,'observational')">👀 Observational</button>
+      </div>
+    </div>
+    <div class="explore-sort">
+      <span class="sort-label">Sort by:</span>
+      <button class="sort-btn active">Top rated</button>
+      <button class="sort-btn">Newest</button>
+      <button class="sort-btn">Most discussed</button>
+    </div>
+    <div class="explore-grid">
+      <!-- Joke cards reused from feed -->
+      <div class="feed-joke-card">
+        <div class="feed-card-header">
+          <div class="comedian-badge"><div class="comedian-avatar" style="background:#fde8d8" aria-hidden="true">🦉</div><div><div class="comedian-name">@NightOwlNick</div><div class="comedian-level">Seasoned Heckler</div></div></div>
+          <span class="joke-category">Observational</span>
+        </div>
+        <div class="joke-body">I finally understand why adults always said "I'll sleep when I'm dead." They were just really bad at predicting when they'd have free time. <span class="joke-punchline">Turns out adulthood is just being permanently tired with better excuses.</span></div>
+        <div class="feed-card-footer">
+          <div class="rating-stars" role="img" aria-label="Rated 4.3 out of 5"><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star empty" aria-hidden="true">★</span><span class="rating-count" style="font-size:.78rem;margin-left:.4rem;opacity:.6">4.3 · 87</span></div>
+          <div class="reaction-row"><button class="reaction-btn active" aria-label="Laugh reaction" aria-pressed="true">😂</button><button class="reaction-btn" aria-label="Applause" aria-pressed="false">👏</button><button class="reaction-btn" aria-label="Comment" aria-pressed="false">💬</button></div>
+        </div>
+      </div>
+      <div class="feed-joke-card">
+        <div class="feed-card-header">
+          <div class="comedian-badge"><div class="comedian-avatar" style="background:#e8f4e8" aria-hidden="true">🌱</div><div><div class="comedian-name">@GrowingGabs</div><div class="comedian-level">Comedy Seedling</div></div></div>
+          <span class="joke-category">Dad Joke</span>
+        </div>
+        <div class="joke-body">I told my wife she was drawing her eyebrows too high. She looked surprised. <span class="joke-punchline">I'm starting to think she didn't believe me.</span></div>
+        <div class="feed-card-footer">
+          <div class="rating-stars" role="img" aria-label="Rated 4.8 out of 5"><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="rating-count" style="font-size:.78rem;margin-left:.4rem;opacity:.6">4.8 · 212</span></div>
+          <div class="reaction-row"><button class="reaction-btn" aria-label="Laugh reaction" aria-pressed="false">😂</button><button class="reaction-btn active" aria-label="Applause" aria-pressed="true">👏</button><button class="reaction-btn" aria-label="Comment" aria-pressed="false">💬</button></div>
+        </div>
+      </div>
+      <div class="feed-joke-card">
+        <div class="feed-card-header">
+          <div class="comedian-badge"><div class="comedian-avatar" style="background:#fff3cd" aria-hidden="true">🔥</div><div><div class="comedian-name">@SunflowerStan</div><div class="comedian-level">Rising Star</div></div></div>
+          <span class="joke-category">Absurdist</span>
+        </div>
+        <div class="joke-body">A skeleton walks into a bar and orders a beer and a mop. <span class="joke-punchline">The bartender nods slowly, the way you do when you've seen everything.</span></div>
+        <div class="feed-card-footer">
+          <div class="rating-stars" role="img" aria-label="Rated 4.1 out of 5"><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star empty" aria-hidden="true">★</span><span class="rating-count" style="font-size:.78rem;margin-left:.4rem;opacity:.6">4.1 · 54</span></div>
+          <div class="reaction-row"><button class="reaction-btn" aria-label="Laugh reaction" aria-pressed="false">😂</button><button class="reaction-btn" aria-label="Applause" aria-pressed="false">👏</button><button class="reaction-btn active" aria-label="Comment" aria-pressed="true">💬</button></div>
+        </div>
+      </div>
+      <div class="feed-joke-card">
+        <div class="feed-card-header">
+          <div class="comedian-badge"><div class="comedian-avatar" style="background:#fde8d8" aria-hidden="true">🎩</div><div><div class="comedian-name">@DadJokeDave</div><div class="comedian-level">Comedy Elder</div></div></div>
+          <span class="joke-category">Dad Joke</span>
+        </div>
+        <div class="joke-body">I asked my dog what two minus two is. <span class="joke-punchline">He said nothing.</span></div>
+        <div class="feed-card-footer">
+          <div class="rating-stars" role="img" aria-label="Rated 4.5 out of 5"><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star empty" aria-hidden="true">★</span><span class="rating-count" style="font-size:.78rem;margin-left:.4rem;opacity:.6">4.5 · 203</span></div>
+          <div class="reaction-row"><button class="reaction-btn active" aria-label="Laugh reaction" aria-pressed="true">😂</button><button class="reaction-btn" aria-label="Applause" aria-pressed="false">👏</button><button class="reaction-btn" aria-label="Comment" aria-pressed="false">💬</button></div>
+        </div>
+      </div>
+      <div class="feed-joke-card">
+        <div class="feed-card-header">
+          <div class="comedian-badge"><div class="comedian-avatar" style="background:#e8f0ff" aria-hidden="true">🌙</div><div><div class="comedian-name">@MidnightMiranda</div><div class="comedian-level">Comedy Seedling</div></div></div>
+          <span class="joke-category">Dark &amp; Dry</span>
+        </div>
+        <div class="joke-body">My therapist told me to embrace my mistakes. <span class="joke-punchline">I gave her a hug and said "this was a terrible idea."</span></div>
+        <div class="feed-card-footer">
+          <div class="rating-stars" role="img" aria-label="Rated 4.6 out of 5"><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="rating-count" style="font-size:.78rem;margin-left:.4rem;opacity:.6">4.6 · 178</span></div>
+          <div class="reaction-row"><button class="reaction-btn active" aria-label="Laugh reaction" aria-pressed="true">😂</button><button class="reaction-btn" aria-label="Applause" aria-pressed="false">👏</button><button class="reaction-btn" aria-label="Comment" aria-pressed="false">💬</button></div>
+        </div>
+      </div>
+      <div class="feed-joke-card">
+        <div class="feed-card-header">
+          <div class="comedian-badge"><div class="comedian-avatar" style="background:#fff0f0" aria-hidden="true">🎪</div><div><div class="comedian-name">@CircusCarl</div><div class="comedian-level">Rising Star</div></div></div>
+          <span class="joke-category">Observational</span>
+        </div>
+        <div class="joke-body">Whoever designed the "close door" button in lifts deserves a raise. <span class="joke-punchline">And a lesson in what "close door" buttons actually do.</span></div>
+        <div class="feed-card-footer">
+          <div class="rating-stars" role="img" aria-label="Rated 4.2 out of 5"><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star empty" aria-hidden="true">★</span><span class="rating-count" style="font-size:.78rem;margin-left:.4rem;opacity:.6">4.2 · 91</span></div>
+          <div class="reaction-row"><button class="reaction-btn" aria-label="Laugh reaction" aria-pressed="false">😂</button><button class="reaction-btn active" aria-label="Applause" aria-pressed="true">👏</button><button class="reaction-btn" aria-label="Comment" aria-pressed="false">💬</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="page-cta">
+      <h2>Want your jokes <em>here?</em></h2>
+      <p>Sign up as a comedian and post your first joke today. Your timestamp is your proof of authorship.</p>
+      <div class="page-cta-btns">
+        <a href="#comedian-signup" class="btn-cta-gold" onclick="showPage('home');setTimeout(()=>document.getElementById('comedian-signup').scrollIntoView({behavior:'smooth'}),50);return false;">Submit a joke →</a>
+      </div>
+    </div>
+  </div><!-- end page-explore -->
+
+  <!-- ══ COMEDIANS PAGE ══ -->
+  <div id="page-comedians" class="page-view">
+    <div class="page-split">
+      <div class="page-split-content">
+        <p class="section-label">For comedians</p>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5rem);line-height:1;margin-bottom:1.5rem">Your jokes deserve<br><em style="font-family:'Fraunces',serif;font-style:italic;color:var(--punch)">real feedback</em></h2>
+        <p style="font-family:'Fraunces',serif;font-size:1.05rem;line-height:1.8;opacity:0.8;max-width:480px;margin-bottom:2rem">Stop guessing what lands. Tickles.LOL connects your material with a real audience who rates, reacts, and tells you exactly what they thought — before you hit the stage.</p>
+        <ul class="feature-list">
+          <li><span class="fi" aria-hidden="true">⭐</span><span><strong>Star ratings from real humans</strong> — not bots, not friends who'll be nice</span></li>
+          <li><span class="fi" aria-hidden="true">💬</span><span><strong>Written feedback on timing, setup &amp; punchline</strong> — specific enough to act on</span></li>
+          <li><span class="fi" aria-hidden="true">📊</span><span><strong>Track your improvement over time</strong> — which styles work, which don't</span></li>
+          <li><span class="fi" aria-hidden="true">🔒</span><span><strong>Timestamped authorship protection</strong> — your joke, your proof, always</span></li>
+          <li><span class="fi" aria-hidden="true">🏆</span><span><strong>Weekly challenges</strong> — themed competitions to push your range</span></li>
+          <li><span class="fi" aria-hidden="true">🎯</span><span><strong>Audience targeting</strong> — test material with specific demographics</span></li>
+        </ul>
+        <a href="#comedian-signup" class="btn-primary" style="align-self:flex-start" onclick="showPage('home');setTimeout(()=>document.getElementById('comedian-signup').scrollIntoView({behavior:'smooth'}),50);return false;"><span aria-hidden="true">🎤</span> Start for free →</a>
+      </div>
+      <div class="page-split-visual">
+        <div class="comedian-stat"><div class="cs-num">3.2K</div><div class="cs-label">Active comedians on the platform</div></div>
+        <div class="comedian-stat"><div class="cs-num">142</div><div class="cs-label">Average ratings per joke in first 48hrs</div></div>
+        <div class="comedian-stat"><div class="cs-num">94%</div><div class="cs-label">Say feedback improved their next set</div></div>
+        <blockquote style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:1.5rem;font-family:'Fraunces',serif;font-style:italic;font-size:0.95rem;color:var(--cream);line-height:1.65;">
+          "I posted my first joke terrified someone would steal it. Instead, 89 people rated it and two gave me the exact notes my comedy teacher never could."
+          <cite style="display:block;margin-top:0.75rem;font-size:0.8rem;font-style:normal;opacity:0.6;">— Priya M., Melbourne</cite>
+        </blockquote>
+      </div>
+    </div>
+    <div class="page-cta">
+      <h2>Ready to find out if it's <em>actually funny?</em></h2>
+      <p>Join free. Post your first joke. Get real feedback within hours.</p>
+      <div class="page-cta-btns">
+        <a href="#comedian-signup" class="btn-cta-gold" onclick="showPage('home');setTimeout(()=>document.getElementById('comedian-signup').scrollIntoView({behavior:'smooth'}),50);return false;"><span aria-hidden="true">🎤</span> Join as a comedian →</a>
+        <a href="#" class="btn-cta-outline" style="border:1.5px solid rgba(255,255,255,0.3);color:var(--cream);padding:.9rem 2rem;border-radius:100px;text-decoration:none;font-size:0.95rem;transition:all 0.2s" onclick="showPage('pricing');return false;">See Pro features</a>
+      </div>
+    </div>
+  </div><!-- end page-comedians -->
+
+  <!-- ══ LAUGHERS PAGE ══ -->
+  <div id="page-laughers" class="page-view">
+    <div class="laughers-hero">
+      <p class="section-label">For laugh-seekers</p>
+      <h1>Your daily dose of<br><em>genuine joy</em></h1>
+      <p>Science-backed, human-made, completely free. Tickles.LOL is the lightest-touch wellbeing habit you'll actually stick to — because it's genuinely funny.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;margin-top:2.5rem;flex-wrap:wrap">
+        <a href="#laugher-signup" class="btn-path-laugher" onclick="showPage('home');setTimeout(()=>document.getElementById('laugher-signup').scrollIntoView({behavior:'smooth'}),50);return false;"><span aria-hidden="true">😂</span> Get my daily laughs →</a>
+      </div>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card"><span class="bi" aria-hidden="true">🧠</span><h4>Reduces cortisol</h4><p>Even brief laughter measurably lowers your body's main stress hormone. A 3-minute joke break works.</p></div>
+      <div class="benefit-card"><span class="bi" aria-hidden="true">💪</span><h4>Boosts immunity</h4><p>Regular laughter is linked to increased immune cell production and reduced inflammation markers.</p></div>
+      <div class="benefit-card"><span class="bi" aria-hidden="true">🤝</span><h4>Builds connection</h4><p>Shared humour is one of the fastest ways humans feel genuinely connected. Even with strangers.</p></div>
+      <div class="benefit-card"><span class="bi" aria-hidden="true">😴</span><h4>Better sleep</h4><p>Laughter before bed reduces physical tension and mental chatter — two of the main enemies of rest.</p></div>
+      <div class="benefit-card"><span class="bi" aria-hidden="true">🎯</span><h4>Personalised feed</h4><p>You choose your humour types. Your feed learns. No algorithm guilt — just the stuff that makes you laugh.</p></div>
+      <div class="benefit-card"><span class="bi" aria-hidden="true">💌</span><h4>Help someone's career</h4><p>Your rating isn't just fun — it's real feedback that helps a comedian grow. You matter to their craft.</p></div>
+    </div>
+    <div class="page-cta">
+      <h2>Start your laugh habit <em>today</em></h2>
+      <p>Free forever. 30 seconds a day. Your mental health will notice.</p>
+      <div class="page-cta-btns">
+        <a href="#laugher-signup" class="btn-cta-gold" onclick="showPage('home');setTimeout(()=>document.getElementById('laugher-signup').scrollIntoView({behavior:'smooth'}),50);return false;"><span aria-hidden="true">😂</span> Sign up free →</a>
+      </div>
+    </div>
+  </div><!-- end page-laughers -->
+
+  <!-- ══ COMMUNITY PAGE ══ -->
+  <div id="page-community" class="page-view">
+    <div class="community-hero">
+      <p class="section-label" style="color:rgba(255,255,255,0.95)">Community</p>
+      <h1>Where jokes become<br><em>something bigger</em></h1>
+      <p>Challenges, leaderboards, spotlights, and stories. The Tickles.LOL community is the funniest corner of the internet — and also one of the kindest.</p>
+    </div>
+    <div class="community-grid">
+      <div class="community-card">
+        <div class="community-card-img" style="background:var(--warm)" aria-hidden="true">🏆</div>
+        <div class="community-card-body">
+          <span class="community-card-tag">Monthly</span>
+          <h4>Leaderboard</h4>
+          <p>The top-rated comedians each month earn a featured spot, a profile badge, and a write-up in the community newsletter. Bragging rights included.</p>
+        </div>
+      </div>
+      <div class="community-card">
+        <div class="community-card-img" style="background:var(--mist)" aria-hidden="true">🎯</div>
+        <div class="community-card-body">
+          <span class="community-card-tag">Weekly</span>
+          <h4>Themed Challenges</h4>
+          <p>Every Monday a new theme drops — "Monday Morning", "Bad Dates", "Technology" — and comedians have a week to craft the best joke on the topic.</p>
+        </div>
+      </div>
+      <div class="community-card">
+        <div class="community-card-img" style="background:#fff3cd" aria-hidden="true">📝</div>
+        <div class="community-card-body">
+          <span class="community-card-tag">Blog</span>
+          <h4>Stories &amp; Spotlights</h4>
+          <p>Comedian journeys, craft tips, laughter science, and community Q&amp;As. Real stories from real people who got funnier by showing up.</p>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--cream);padding:3rem 4rem;text-align:center">
+      <p class="section-label">This week's challenge</p>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:3rem;margin-bottom:0.5rem">"Monday Morning"</h2>
+      <p style="font-family:'Fraunces',serif;font-size:1rem;opacity:0.7;margin-bottom:2rem">3 days remaining · 147 entries so far</p>
+      <a href="#comedian-signup" class="btn-primary" onclick="showPage('home');setTimeout(()=>document.getElementById('comedian-signup').scrollIntoView({behavior:'smooth'}),50);return false;">Enter this week's challenge →</a>
+    </div>
+    <div class="page-cta">
+      <h2>Be part of the <em>joke</em></h2>
+      <p>The community grows every day. Your voice — whether as a comedian or a rater — shapes what Tickles.LOL becomes.</p>
+      <div class="page-cta-btns">
+        <a href="#signup" class="btn-cta-gold" onclick="showPage('home');setTimeout(()=>document.getElementById('signup').scrollIntoView({behavior:'smooth'}),50);return false;">Join the community →</a>
+      </div>
+    </div>
+  </div><!-- end page-community -->
+
+  <!-- ══ PRICING PAGE ══ -->
+  <div id="page-pricing" class="page-view">
+    <div class="pricing-hero">
+      <p class="section-label">Pricing</p>
+      <h1>Start free.<br>Go <em>deeper</em> when you're ready.</h1>
+      <p>Tickles.LOL is free forever. Upgrade when the platform becomes a real part of your comedy career or daily routine.</p>
+    </div>
+    <div class="pricing-grid">
+      <!-- Free -->
+      <div class="pricing-card">
+        <div class="price-tier">Free forever</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">No credit card needed</div>
+        <p class="price-desc">Everything you need to get started — whether you're testing jokes or testing your morning mood.</p>
+        <ul class="price-features">
+          <li>Post up to 5 jokes per week</li>
+          <li>Star ratings from the community</li>
+          <li>Basic written feedback</li>
+          <li>Daily personalised laugh feed</li>
+          <li>Reaction &amp; rating tools</li>
+          <li>Timestamped authorship on all jokes</li>
+        </ul>
+        <a href="#signup" class="btn-price btn-price-outline" onclick="showPage('home');setTimeout(()=>document.getElementById('signup').scrollIntoView({behavior:'smooth'}),50);return false;">Get started free</a>
+      </div>
+      <!-- Plus (laughers) -->
+      <div class="pricing-card featured">
+        <span class="featured-badge">Most popular</span>
+        <div class="price-tier">Tickles Plus</div>
+        <div class="price-amount">$4.99<span style="font-size:1.5rem;font-family:'DM Sans',sans-serif">/mo</span></div>
+        <div class="price-period">or $39/yr — save 35%</div>
+        <p class="price-desc">For laugh-seekers who want the full experience — ad-free, curated, and built around your taste.</p>
+        <ul class="price-features">
+          <li>Everything in Free</li>
+          <li>Ad-free experience</li>
+          <li>Curated themed collections</li>
+          <li>Save &amp; organise favourite jokes</li>
+          <li>Daily mood-matched delivery</li>
+          <li>Weekly "Best Of" digest email</li>
+          <li>Early access to new features</li>
+        </ul>
+        <a href="#laugher-signup" class="btn-price btn-price-primary" onclick="showPage('home');setTimeout(()=>document.getElementById('laugher-signup').scrollIntoView({behavior:'smooth'}),50);return false;">Start free trial</a>
+      </div>
+      <!-- Pro (comedians) -->
+      <div class="pricing-card">
+        <div class="price-tier">Tickles Pro</div>
+        <div class="price-amount">$9.99<span style="font-size:1.5rem;font-family:'DM Sans',sans-serif">/mo</span></div>
+        <div class="price-period">or $79/yr — save 34%</div>
+        <p class="price-desc">For serious comedians using Tickles.LOL as a genuine craft tool — not just a fun side project.</p>
+        <ul class="price-features">
+          <li>Everything in Free</li>
+          <li>Unlimited joke submissions</li>
+          <li>Detailed performance analytics</li>
+          <li>Feedback tag breakdown (timing, setup, punchline)</li>
+          <li>Audience demographic insights</li>
+          <li>Verified comedian badge</li>
+          <li>Priority placement in Explore feed</li>
+          <li>Monthly 1:1 feedback report</li>
+        </ul>
+        <a href="#comedian-signup" class="btn-price btn-price-outline" onclick="showPage('home');setTimeout(()=>document.getElementById('comedian-signup').scrollIntoView({behavior:'smooth'}),50);return false;">Start free trial</a>
+      </div>
+    </div>
+    <div style="background:var(--mist);padding:3rem 4rem;text-align:center">
+      <p style="font-family:'Fraunces',serif;font-style:italic;font-size:1rem;opacity:0.75;max-width:500px;margin:0 auto">All paid plans come with a 14-day free trial. No lock-in. Cancel any time. We'd rather you stay because you love it.</p>
+    </div>
+    <div class="page-cta">
+      <h2>Questions about <em>pricing?</em></h2>
+      <p>We keep it simple. If anything is unclear, we're one email away.</p>
+      <div class="page-cta-btns">
+        <a href="mailto:hello@tickles.lol" class="btn-cta-gold">Get in touch →</a>
+      </div>
+    </div>
+  </div><!-- end page-pricing -->
+
+  <!-- ══ ABOUT PAGE ══ -->
+  <div id="page-about" class="page-view">
+    <div class="about-hero">
+      <div>
+        <p class="section-label">About us</p>
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,5vw,4.5rem);line-height:1;margin-bottom:1.5rem">Built for laughs.<br><em style="font-family:'Fraunces',serif;font-style:italic;color:var(--punch)">Backed by science.</em></h2>
+        <p style="font-family:'Fraunces',serif;font-size:1.05rem;line-height:1.8;opacity:0.8;margin-bottom:1.5rem">Tickles.LOL started from a simple observation: the world has a lot of aspiring comedians who need honest feedback, and a lot of people who desperately need to laugh more. Neither group had a good home.</p>
+        <p style="font-family:'Fraunces',serif;font-size:1.05rem;line-height:1.8;opacity:0.8">We built the bridge. A community where the act of getting better at comedy and the act of improving your mental health are the same thing.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="mh-stat-card"><div class="mh-stat-icon" aria-hidden="true">🌍</div><div class="mh-stat-text"><strong>48 countries</strong>Comedians and laugh-seekers from around the world</div></div>
+        <div class="mh-stat-card"><div class="mh-stat-icon" aria-hidden="true">😂</div><div class="mh-stat-text"><strong>12K+ jokes rated</strong>This month alone — and growing</div></div>
+        <div class="mh-stat-card"><div class="mh-stat-icon" aria-hidden="true">❤️</div><div class="mh-stat-text"><strong>Free at the core</strong>The basic experience will always be free, always</div></div>
+      </div>
+    </div>
+    <div class="about-mission">
+      <h2>Our mission</h2>
+      <p>To make laughter as normal a part of daily wellness as exercise or sleep — and to give every aspiring comedian, regardless of background or access, a real shot at getting better at their craft through honest, kind, community-driven feedback.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card"><span class="vi" aria-hidden="true">🛡️</span><h4>Creators own their work</h4><p>Every joke submitted is timestamped and owned entirely by its author. We hold a limited display licence — nothing more.</p></div>
+      <div class="value-card"><span class="vi" aria-hidden="true">🤝</span><h4>Kindness is a rule</h4><p>Feedback must be constructive. Our community guidelines exist to protect comedians from cruelty dressed up as critique.</p></div>
+      <div class="value-card"><span class="vi" aria-hidden="true">🧠</span><h4>Laughter is medicine</h4><p>We take the mental health dimension seriously. The platform is designed around habits that actually improve wellbeing.</p></div>
+      <div class="value-card"><span class="vi" aria-hidden="true">🌱</span><h4>Amateur is honourable</h4><p>We celebrate the person trying their first joke as much as the seasoned open-mic regular. Everyone starts somewhere.</p></div>
+    </div>
+    <div class="page-cta">
+      <h2>Come join the <em>fun</em></h2>
+      <p>Whether you've got jokes or just need a laugh — you belong here.</p>
+      <div class="page-cta-btns">
+        <a href="#signup" class="btn-cta-gold" onclick="showPage('home');setTimeout(()=>document.getElementById('signup').scrollIntoView({behavior:'smooth'}),50);return false;">Join Tickles.LOL free →</a>
+      </div>
+    </div>
+  </div><!-- end page-about -->
+
+  </main>
+
   <!-- FOOTER -->
-  <footer>
+  <footer role="contentinfo">
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="#" class="nav-logo">Tickles<span style="color:var(--gold)">.LOL</span></a>
@@ -1283,14 +2030,108 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Tickles.LOL. Built for laughs, backed by science.</span>
+      <span>© <span id="copy-year">2026</span> Tickles.LOL. Built for laughs, backed by science.</span>
       <div class="pwa-footer">
-        <span class="pwa-badge">📱 Install as app — works offline</span>
+        <span class="pwa-badge"><span aria-hidden="true">📱</span> Install as app — works offline</span>
       </div>
     </div>
   </footer>
 
-  <!-- PWA Service Worker Registration -->
+  <!-- ── CLIENT-SIDE ROUTING ── -->
+  <script>
+    const PAGES = ['home','explore','comedians','laughers','community','pricing','about'];
+
+    function showPage(pageId, filter) {
+      // Hide all pages
+      PAGES.forEach(id => {
+        const el = document.getElementById('page-' + id);
+        if (el) el.classList.remove('active');
+      });
+
+      // Show target page
+      const target = document.getElementById('page-' + pageId);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Update nav active state
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      document.querySelectorAll('.nav-trigger, .nav-item > a').forEach(el => {
+        if (el.textContent.trim().toLowerCase().includes(pageId)) {
+          el.closest('.nav-item')?.classList.add('active');
+        }
+      });
+
+      // Update URL hash without scroll
+      history.pushState({ page: pageId }, '', '#' + pageId);
+
+      // Handle filter if on explore page
+      if (pageId === 'explore' && filter) {
+        setTimeout(() => setFilter(null, filter), 50);
+      }
+    }
+
+    function setFilter(btnEl, filter) {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      else {
+        document.querySelectorAll('.filter-chip').forEach(c => {
+          if (c.textContent.toLowerCase().includes(filter)) c.classList.add('active');
+        });
+      }
+    }
+
+    // Sort buttons
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('sort-btn')) {
+        document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+      }
+    });
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', e => {
+      const page = e.state?.page || location.hash.replace('#','') || 'home';
+      if (PAGES.includes(page)) showPage(page);
+    });
+
+    // Handle initial load from hash
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = location.hash.replace('#','');
+      if (PAGES.includes(hash)) showPage(hash);
+    });
+
+    // ── MOBILE HAMBURGER ──
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('nav-drawer');
+
+    function closeMobile() {
+      hamburger.classList.remove('open');
+      drawer.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      drawer.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close drawer on outside click
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !drawer.contains(e.target)) {
+        closeMobile();
+      }
+    });
+
+    // Close drawer on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMobile();
+    });
+  </script>
+
+    <!-- PWA Service Worker Registration -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -1305,12 +2146,16 @@
     }, { threshold: 0.12 });
     reveals.forEach(el => observer.observe(el));
 
-    // Reaction button toggle
+    // Reaction button toggle — update aria-pressed for screen readers
     document.querySelectorAll('.reaction-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const siblings = this.parentElement.querySelectorAll('.reaction-btn');
-        siblings.forEach(s => s.classList.remove('active'));
+        siblings.forEach(s => {
+          s.classList.remove('active');
+          s.setAttribute('aria-pressed', 'false');
+        });
         this.classList.add('active');
+        this.setAttribute('aria-pressed', 'true');
       });
     });
 
@@ -1383,8 +2228,8 @@
         .catch(() => {
           btnEl.disabled = false;
           btnEl.innerHTML = isComedian
-            ? '<span>🎤 Join as a Comedian</span>'
-            : '<span>😂 Send Me Daily Laughs</span>';
+            ? '<span aria-hidden="true">🎤</span> <span>Join as a Comedian</span>'
+            : '<span aria-hidden="true">😂</span> <span>Send Me Daily Laughs</span>';
           errorEl.textContent = 'Something went wrong. Please try again.';
           errorEl.classList.add('visible');
         });
@@ -1395,6 +2240,12 @@
         if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
       });
     });
+
+    // Auto-update copyright year — resets automatically on 1 Jan each year
+    (function () {
+      const el = document.getElementById('copy-year');
+      if (el) el.textContent = new Date().getFullYear();
+    })();
   </script>
 </body>
 </html>
