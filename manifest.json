@@ -8,26 +8,23 @@
   "theme_color": "#1a0a00",
   "orientation": "portrait-primary",
   "icons": [
-    {
-      "src": "/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/icons/icon-48.png",   "sizes": "48x48",   "type": "image/png" },
+    { "src": "/icons/icon-72.png",   "sizes": "72x72",   "type": "image/png" },
+    { "src": "/icons/icon-96.png",   "sizes": "96x96",   "type": "image/png" },
+    { "src": "/icons/icon-128.png",  "sizes": "128x128", "type": "image/png" },
+    { "src": "/icons/icon-144.png",  "sizes": "144x144", "type": "image/png" },
+    { "src": "/icons/icon-152.png",  "sizes": "152x152", "type": "image/png" },
+    { "src": "/icons/icon-192.png",  "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-384.png",  "sizes": "384x384", "type": "image/png" },
+    { "src": "/icons/icon-512.png",  "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
   "screenshots": [
     {
-      "src": "/screenshots/home.png",
-      "sizes": "1280x720",
+      "src": "/icons/icon-og.png",
+      "sizes": "1200x1200",
       "type": "image/png",
-      "form_factor": "wide",
-      "label": "Tickles.LOL Home Feed"
+      "form_factor": "narrow",
+      "label": "Tickles.LOL – Comedy That Connects"
     }
   ],
   "categories": ["entertainment", "social", "health"],
@@ -36,14 +33,14 @@
       "name": "Post a Joke",
       "short_name": "Post Joke",
       "description": "Share a new joke with the community",
-      "url": "/post",
+      "url": "/#comedians",
       "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }]
     },
     {
       "name": "Today's Feed",
       "short_name": "Feed",
       "description": "See today's freshest jokes",
-      "url": "/feed",
+      "url": "/#explore",
       "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }]
     }
   ]
